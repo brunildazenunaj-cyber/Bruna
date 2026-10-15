@@ -1,4 +1,5 @@
 "use client";
+import { GoldSection } from "@/components/gold-section";
 import { useState } from "react";
 import {
   ArrowUpRight,
@@ -268,13 +269,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section id="gold" className="gold-coming">
-          <span>✧</span>
-          <div>
-            <h3>{t.gold}</h3>
-            <p>{t.goldNote}</p>
-          </div>
-        </section>
+        <GoldSection lang={lang} />
       </main>
       <footer>
         <div className="footer-top">

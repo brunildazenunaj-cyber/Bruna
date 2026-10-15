@@ -1298,3 +1298,60 @@ footer {
 .hero-secondary:hover {
   text-decoration: underline;
 }
+.gold-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7%;
+  border-top: 1px solid var(--line);
+}
+.gold-section h3 {
+  font:
+    32px Georgia,
+    serif;
+}
+.gold-steps {
+  list-style: none;
+  padding: 0;
+}
+.gold-steps li {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.gold-steps strong {
+  color: #8f7b53;
+}
+.gold-steps p {
+  margin: 10px 0;
+}
+.gold-section p {
+  font-size: 13px;
+}
+.admin-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+.admin-tabs button[aria-selected="false"] {
+  background: transparent;
+  color: var(--ink);
+}
+.gold-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+.admin-shell .gold-check input {
+  width: auto;
+  margin: 3px 0;
+}
+.gold-form > label:first-child {
+  margin-top: 0;
+}
+@media (max-width: 760px) {
+  .gold-section {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+}

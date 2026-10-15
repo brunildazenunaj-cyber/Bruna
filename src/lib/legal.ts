@@ -12,7 +12,7 @@ export const legal = {
         ],
         [
           "Information and purpose",
-          "We collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
+          "For Gold Group access we collect your full name, email and TradeQuo Broker ID to manually check registration and the required deposit. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator. We also collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
         ],
         [
           "Providers and international transfers",
@@ -75,7 +75,7 @@ export const legal = {
       sections: [
         [
           "Transparent relationships",
-          "Any future broker referral links must be identified where used. BMM may receive compensation from a provider when a qualifying referral is made, subject to the actual agreement. No broker onboarding or referral programme is implemented in this release.",
+          "Any future broker referral links must be identified where used. BMM may receive compensation from a provider when a qualifying referral is made, subject to the actual agreement. The TradeQuo registration link is a referral link. Confirm the applicable commercial agreement before launch.",
         ],
         [
           "Independent decisions",
@@ -97,7 +97,7 @@ export const legal = {
         ],
         [
           "Të dhënat dhe qëllimi",
-          "Mbledhim të dhënat që dërgon në aplikim: emrin, emailin, numrin e WhatsApp, shtetin, përvojën, synimet dhe kohëzgjatjen e preferuar. I përdorim për t’iu përgjigjur kërkesës dhe për të menaxhuar aplikimin. Trajtimi i kërkesës për anëtarësim është i veçantë nga pëlqimi opsional për marketing.",
+          "Për aksesin në Gold Group mbledhim emrin, emailin dhe ID e brokerit TradeQuo për verifikimin manual të regjistrimit dhe depozitës. Regjistrohen miratimi dhe dërgimi i ftesës. Administratori e dërgon ftesën personalisht. Gjithashtu mbledhim të dhënat që dërgon në aplikim: emrin, emailin, numrin e WhatsApp, shtetin, përvojën, synimet dhe kohëzgjatjen e preferuar. I përdorim për t’iu përgjigjur kërkesës dhe për të menaxhuar aplikimin. Trajtimi i kërkesës për anëtarësim është i veçantë nga pëlqimi opsional për marketing.",
         ],
         [
           "Ofruesit dhe transferimet ndërkombëtare",
@@ -160,7 +160,7 @@ export const legal = {
       sections: [
         [
           "Transparenca",
-          "Çdo lidhje e ardhshme referimi te brokerat duhet të shënohet qartë. BMM mund të marrë kompensim nga ofruesi për referime që plotësojnë kushtet, sipas marrëveshjes reale. Në këtë version nuk është implementuar proces regjistrimi te brokerat apo program referimesh.",
+          "Çdo lidhje e ardhshme referimi te brokerat duhet të shënohet qartë. BMM mund të marrë kompensim nga ofruesi për referime që plotësojnë kushtet, sipas marrëveshjes reale. Lidhja e regjistrimit TradeQuo është lidhje referimi. Konfirmo marrëveshjen tregtare përkatëse para publikimit.",
         ],
         [
           "Vendime të pavarura",

@@ -1,4 +1,6 @@
 "use client";
+import { GoldAdmin } from "@/components/gold-admin";
+import { goldCopy } from "@/lib/gold";
 import { useEffect, useState, useCallback } from "react";
 import { useLanguage, LanguageSwitch } from "@/components/language";
 import { statuses } from "@/lib/validation";
@@ -166,6 +168,7 @@ const copy = {
   },
 };
 export default function Admin() {
+  const [tab, setTab] = useState<"academy" | "gold">("academy");
   const [lang, setLang] = useLanguage(),
     t = copy[lang];
   const [logged, setLogged] = useState(false),
@@ -303,7 +306,29 @@ export default function Admin() {
           )}
         </div>
       </header>
-      {message && (
+      {logged && (
+        <div
+          className="admin-tabs"
+          role="tablist"
+          aria-label={lang === "en" ? "Request type" : "Lloji i kërkesës"}
+        >
+          <button
+            role="tab"
+            aria-selected={tab === "academy"}
+            onClick={() => setTab("academy")}
+          >
+            {t.title}
+          </button>
+          <button
+            role="tab"
+            aria-selected={tab === "gold"}
+            onClick={() => setTab("gold")}
+          >
+            {goldCopy[lang].tab}
+          </button>
+        </div>
+      )}
+      {message && (tab === "academy" || !logged) && (
         <p
           className={message === "failed" ? "error" : "admin-notice"}
           role="status"
@@ -336,6 +361,8 @@ export default function Admin() {
             {busy ? t.loading : t.signIn}
           </button>
         </form>
+      ) : tab === "gold" ? (
+        <GoldAdmin lang={lang} />
       ) : (
         <>
           <div className="stats">
