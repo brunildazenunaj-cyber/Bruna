@@ -12,7 +12,7 @@ export const legal = {
         ],
         [
           "Information and purpose",
-          "For Gold Group access we collect your full name, email and TradeQuo Broker ID to manually check registration and the required deposit. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator. We also collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
+          "For Gold Group access we collect your full name, email, WhatsApp number and TradeQuo Broker ID to manually check registration and the required deposit, and to contact you about your access request. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator. We also collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
         ],
         [
           "Providers and international transfers",
@@ -97,7 +97,7 @@ export const legal = {
         ],
         [
           "Të dhënat dhe qëllimi",
-          "Për aksesin në Gold Group mbledhim emrin, emailin dhe ID e brokerit TradeQuo për verifikimin manual të regjistrimit dhe depozitës. Regjistrohen miratimi dhe dërgimi i ftesës. Administratori e dërgon ftesën personalisht. Gjithashtu mbledhim të dhënat që dërgon në aplikim: emrin, emailin, numrin e WhatsApp, shtetin, përvojën, synimet dhe kohëzgjatjen e preferuar. I përdorim për t’iu përgjigjur kërkesës dhe për të menaxhuar aplikimin. Trajtimi i kërkesës për anëtarësim është i veçantë nga pëlqimi opsional për marketing.",
+          "Për aksesin në Gold Group mbledhim emrin, emailin, numrin e WhatsApp dhe ID e brokerit TradeQuo për verifikimin manual të regjistrimit dhe depozitës, si dhe për të të kontaktuar për kërkesën e aksesit. Regjistrohen miratimi dhe dërgimi i ftesës. Administratori e dërgon ftesën personalisht. Gjithashtu mbledhim të dhënat që dërgon në aplikim: emrin, emailin, numrin e WhatsApp, shtetin, përvojën, synimet dhe kohëzgjatjen e preferuar. I përdorim për t’iu përgjigjur kërkesës dhe për të menaxhuar aplikimin. Trajtimi i kërkesës për anëtarësim është i veçantë nga pëlqimi opsional për marketing.",
         ],
         [
           "Ofruesit dhe transferimet ndërkombëtare",

@@ -128,6 +128,7 @@ test("Gold request form remains separate and fails honestly without services", a
   await form.locator("[name=name]").fill("Gold Test");
   await form.locator("[name=email]").fill("gold@example.com");
   await form.locator("[name=broker_id]").fill("TQ123");
+  await form.locator("[name=phone]").fill("+355 69 123 4567");
   await form.locator("[name=privacy]").check();
   await form.getByRole("button", { name: "Submit access request" }).click();
   await expect(form.locator("[role=alert]")).toContainText("could not confirm");
@@ -152,6 +153,7 @@ test("Gold dashboard tab and manual controls with isolated UI fixtures", async (
     id: "123e4567-e89b-42d3-a456-426614174000",
     name: "Fixture Person",
     email: "fixture@example.com",
+    phone: "+355 69 123 4567",
     broker_id: "TQ123",
     status: "Pending Verification",
     created_at: "2026-10-15T12:00:00Z",
@@ -185,6 +187,9 @@ test("Gold dashboard tab and manual controls with isolated UI fixtures", async (
   await page.getByRole("button", { name: "EN", exact: true }).click();
   await page.getByRole("tab", { name: "Gold Group Requests" }).click();
   await page.getByRole("button", { name: /Fixture Person/ }).click();
+  await expect(
+    page.locator('a[href="https://wa.me/355691234567"]'),
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Approve request" }),
   ).toBeDisabled();
@@ -252,6 +257,7 @@ test("both forms keep separate payloads and confirmations using isolated API fix
   await gold.locator("[name=name]").fill("Controlled Gold Test");
   await gold.locator("[name=email]").fill("gold@example.com");
   await gold.locator("[name=broker_id]").fill("TQ123");
+  await gold.locator("[name=phone]").fill("+355 69 123 4567");
   await gold.locator("[name=privacy]").check();
   await gold.getByRole("button", { name: "Submit access request" }).click();
   await expect(page.locator("#gold-request [role=status]")).toContainText(
@@ -273,6 +279,7 @@ test("both forms keep separate payloads and confirmations using isolated API fix
   expect(posts.map((p) => p.url)).toEqual(["gold-requests", "applications"]);
   expect(posts[0].data).toMatchObject({
     broker_id: "TQ123",
+    phone: "+355 69 123 4567",
     privacy: true,
     language: "en",
   });
@@ -283,4 +290,39 @@ test("both forms keep separate payloads and confirmations using isolated API fix
     language: "en",
   });
   expect(posts[1].data).not.toHaveProperty("broker_id");
+});
+
+test("Gold required fields show red stars and WhatsApp is mandatory", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "EN", exact: true }).click();
+  const form = page.locator(".gold-form");
+  await expect(form.locator(".required-star")).toHaveCount(5);
+  for (const name of ["name", "email", "phone", "broker_id"])
+    await expect(form.locator(`[name=${name}]`)).toHaveAttribute(
+      "required",
+      "",
+    );
+  await expect(form.locator(".required-star").first()).toHaveCSS(
+    "color",
+    "rgb(180, 35, 24)",
+  );
+  await form.locator("[name=name]").fill("Test Person");
+  await form.locator("[name=email]").fill("test@example.com");
+  await form.locator("[name=broker_id]").fill("TQ123");
+  await form.locator("[name=privacy]").check();
+  expect(await form.evaluate((f: HTMLFormElement) => f.checkValidity())).toBe(
+    false,
+  );
+  await form.locator("[name=phone]").fill("0691234567");
+  expect(await form.evaluate((f: HTMLFormElement) => f.checkValidity())).toBe(
+    false,
+  );
+  await form.locator("[name=phone]").fill("+355 69 123 4567");
+  expect(await form.evaluate((f: HTMLFormElement) => f.checkValidity())).toBe(
+    true,
+  );
+  await page.getByRole("button", { name: "SQ", exact: true }).click();
+  await expect(form.getByText("Numri i WhatsApp")).toBeVisible();
 });

@@ -58,3 +58,11 @@ External URL check: the supplied TradeQuo and My ProTrader destinations were ret
 - `npm run build`: passed with the existing Next.js stack.
 - Browser suite: 9 passed with system Chromium against the production build. Includes Albanian default and English persistence, exact section order, responsive widths from 320 to 1440 pixels, both form error paths, isolated success UI fixtures, access denial, Gold manual controls and legal routes.
 - Desktop/mobile rendered layouts reviewed. No owner video was played because it is absent. No actual notification email was sent or confirmed. Live migration status, production Auth and live submissions remain unverified because service access is unavailable.
+
+## Required WhatsApp contact update
+
+Before deploying the new four-field Gold form, check `information_schema.columns` for `public.gold_requests.phone` (the read-only preflight above already lists every Gold column). If missing and migration 002 is complete, run the complete `supabase/migrations/003_gold_whatsapp.sql` once in Supabase SQL Editor. This file already includes BEGIN/COMMIT. Do not rerun 001 or 002. If the phone column exists, compare the `gold_requests_phone_format` constraint with 003 instead of rerunning it. Investigate partial schema differences before changing anything.
+
+The database column permits NULL for historical requests. The new public API requires a valid international phone number for every new submission. Existing requests remain reviewable and show “Not provided (earlier request)”; no fabricated numbers are added. Academy storage and notifications are unchanged. Gold privacy acknowledgement now uses version `2026-10-gold-whatsapp`.
+
+The phone is included in Gold admin notification emails and in the private dashboard with a user-initiated WhatsApp link. The website does not send WhatsApp messages or Telegram invitations automatically. Confirm the phone is saved and the admin email contains it in the controlled production acceptance test after applying 003. This migration has been tested locally; production application is not confirmed without database access.

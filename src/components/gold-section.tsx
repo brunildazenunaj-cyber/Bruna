@@ -28,7 +28,9 @@ export function GoldRequestForm({ lang }: { lang: Language }) {
             ? t.duplicate
             : data.error === "rate"
               ? t.rate
-              : t.error,
+              : data.error === "validation"
+                ? t.validation
+                : t.error,
         );
         setState("idle");
         return;
@@ -50,18 +52,49 @@ export function GoldRequestForm({ lang }: { lang: Language }) {
         </p>
       ) : (
         <form className="application-form gold-form" onSubmit={submit}>
-          {["name", "email", "broker_id"].map((name, i) => (
+          <p className="form-note">{t.required}</p>
+          {["name", "email", "phone", "broker_id"].map((name, i) => (
             <label key={name}>
-              {t.fields[i]}
+              {t.fields[i]}{" "}
+              <span className="required-star" aria-hidden="true">
+                *
+              </span>
               <input
                 name={name}
-                type={name === "email" ? "email" : "text"}
-                autoComplete={name === "broker_id" ? "off" : name}
+                type={
+                  name === "email" ? "email" : name === "phone" ? "tel" : "text"
+                }
+                autoComplete={
+                  name === "broker_id" ? "off" : name === "phone" ? "tel" : name
+                }
                 minLength={name === "name" ? 2 : 1}
-                maxLength={name === "name" ? 120 : name === "email" ? 254 : 80}
-                pattern={name === "broker_id" ? "[A-Za-z0-9_\\-]+" : undefined}
+                maxLength={
+                  name === "name"
+                    ? 120
+                    : name === "email"
+                      ? 254
+                      : name === "phone"
+                        ? 25
+                        : 80
+                }
+                pattern={
+                  name === "broker_id"
+                    ? "[A-Za-z0-9_\\-]+"
+                    : name === "phone"
+                      ? String.raw`\+[1-9][0-9 \(\)\-]{6,24}`
+                      : undefined
+                }
+                aria-describedby={
+                  name === "phone" ? "gold-phone-hint" : undefined
+                }
+                placeholder={name === "phone" ? "+355 69 123 4567" : undefined}
                 required
               />
+              {name === "phone" && (
+                <span id="gold-phone-hint" className="phone-hint">
+                  {t.phoneHint}
+                </span>
+              )}
             </label>
           ))}
           <div className="honeypot" aria-hidden="true">
@@ -73,6 +106,9 @@ export function GoldRequestForm({ lang }: { lang: Language }) {
           <label className="checkbox">
             <input type="checkbox" name="privacy" required />
             <span>
+              <span className="required-star" aria-hidden="true">
+                *
+              </span>{" "}
               {t.privacy}{" "}
               <a
                 href={`/legal/privacy?lang=${lang}`}

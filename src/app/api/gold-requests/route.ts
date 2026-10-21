@@ -31,15 +31,16 @@ export async function POST(req: Request) {
     );
     if (limitError) throw limitError;
     if (!allowed) return NextResponse.json({ error: "rate" }, { status: 429 });
-    const { name, email, broker_id, language } = parsed.data;
+    const { name, email, phone, broker_id, language } = parsed.data;
     const { data, error } = await db
       .from("gold_requests")
       .insert({
         name,
         email,
+        phone,
         broker_id,
         language,
-        privacy_version: "2026-10-gold",
+        privacy_version: "2026-10-gold-whatsapp",
         privacy_acknowledged_at: new Date().toISOString(),
       })
       .select("id")

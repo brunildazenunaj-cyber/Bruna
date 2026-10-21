@@ -7,6 +7,7 @@ test("Gold form rejects forged approval, credentials and invalid data", () => {
   const a = {
     name: "Test Person",
     email: "TEST@example.com",
+    phone: "+355 69 123 4567",
     broker_id: "TQ-123",
     language: "en",
     privacy: true,
@@ -20,6 +21,10 @@ test("Gold form rejects forged approval, credentials and invalid data", () => {
     { website: "spam" },
     { broker_id: "<script>" },
     { email: "invalid" },
+    { phone: undefined },
+    { phone: "" },
+    { phone: "0691234567" },
+    { phone: "+1------" },
   ])
     assert.equal(goldSchema.safeParse({ ...a, ...change }).success, false);
   assert.equal(
@@ -38,13 +43,33 @@ test("Gold migration isolates data and enforces manual approval, audit and sent 
     );
     for (const file of ["001_academy.sql", "002_gold_requests.sql"])
       await db.exec(await readFile(`supabase/migrations/${file}`, "utf8"));
+    await db.exec(
+      "insert into gold_requests(name,email,broker_id,language,privacy_version,privacy_acknowledged_at) values('Legacy Person','legacy@example.com','LEGACY','en','v1',now())",
+    );
+    await db.exec(
+      await readFile("supabase/migrations/003_gold_whatsapp.sql", "utf8"),
+    );
+    assert.equal(
+      (
+        await db.query<{ phone: string | null }>(
+          "select phone from gold_requests where broker_id='LEGACY'",
+        )
+      ).rows[0].phone,
+      null,
+    );
+    await assert.rejects(
+      db.exec(
+        "update gold_requests set phone='invalid' where broker_id='LEGACY'",
+      ),
+      /check constraint/,
+    );
     const actor = "123e4567-e89b-42d3-a456-426614174000";
     await db.query("insert into auth.users values ($1)", [actor]);
     await db.exec(
       "insert into applications(name,email,phone,country,experience,reason,duration,language,privacy_version,privacy_acknowledged_at) values('Academy Person','same@example.com','+355691234567','Albania','beginner','Learning markets','6','en','v1',now())",
     );
     const insert =
-      "insert into gold_requests(name,email,broker_id,language,privacy_version,privacy_acknowledged_at) values('Gold Person','same@example.com','TQ123','en','v1',now()) returning id,status";
+      "insert into gold_requests(name,email,phone,broker_id,language,privacy_version,privacy_acknowledged_at) values('Gold Person','same@example.com','+355 69 123 4567','TQ123','en','v1',now()) returning id,status";
     const a = (await db.query<{ id: string; status: string }>(insert)).rows[0];
     assert.equal(a.status, "Pending Verification");
     await assert.rejects(db.exec(insert), /unique/);
@@ -84,7 +109,7 @@ test("Gold migration isolates data and enforces manual approval, audit and sent 
         invitation_sent_at: string;
         invitation_sent_by: string;
         status: string;
-      }>("select * from gold_requests")
+      }>("select * from gold_requests where broker_id='TQ123'")
     ).rows[0];
     assert.equal(sent.status, "Invitation Sent");
     assert.ok(sent.invitation_sent_at);

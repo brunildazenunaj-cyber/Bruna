@@ -14,6 +14,15 @@ export const goldSchema = z
       .email()
       .max(254)
       .transform((s) => s.toLowerCase()),
+    phone: z
+      .string()
+      .trim()
+      .max(25)
+      .regex(/^\+[1-9][0-9 ()-]{6,24}$/)
+      .refine((value) => {
+        const digits = value.replace(/\D/g, "");
+        return digits.length >= 7 && digits.length <= 15;
+      }),
     broker_id: z
       .string()
       .trim()
@@ -50,7 +59,18 @@ export const goldCopy = {
     formTitle: "Request Telegram access",
     explain:
       "After completing registration, submit your details. We will manually check registration and the required deposit in TradeQuo. If approved, the administrator will personally send your invitation. Submitting this form does not confirm eligibility.",
-    fields: ["Full name", "Email address", "TradeQuo Broker ID"],
+    fields: [
+      "Name and surname",
+      "Email address",
+      "WhatsApp number",
+      "TradeQuo Broker ID",
+    ],
+    required: "Fields marked * are required.",
+    phoneHint:
+      "Include your international country code, for example +355 69 123 4567.",
+    notProvided: "Not provided (earlier request)",
+    validation:
+      "Check all required fields and enter a valid WhatsApp number with international country code (starting with +).",
     privacy:
       "I have read the Privacy Policy and understand how my request will be handled.",
     submit: "Submit access request",
@@ -80,7 +100,7 @@ export const goldCopy = {
     markConfirm:
       "Have you personally sent the Telegram invitation? This records the time; it does not send a message.",
     retry: "Retry notification email",
-    search: "Search name, email or Broker ID",
+    search: "Search name, email, WhatsApp or Broker ID",
     all: "All statuses",
     empty: "No Gold Group requests found.",
     select: "Select a request to review.",
@@ -132,7 +152,18 @@ export const goldCopy = {
     formTitle: "Kërko akses në Telegram",
     explain:
       "Pas regjistrimit, dërgo të dhënat. Do të kontrollojmë manualisht regjistrimin dhe depozitën në TradeQuo. Nëse miratohesh, administratori do ta dërgojë personalisht ftesën. Formulari nuk konfirmon përshtatshmërinë.",
-    fields: ["Emri dhe mbiemri", "Adresa e emailit", "ID e brokerit TradeQuo"],
+    fields: [
+      "Emri dhe mbiemri",
+      "Adresa e emailit",
+      "Numri i WhatsApp",
+      "ID e brokerit TradeQuo",
+    ],
+    required: "Fushat e shënuara me * janë të detyrueshme.",
+    phoneHint:
+      "Përfshi kodin ndërkombëtar të shtetit, për shembull +355 69 123 4567.",
+    notProvided: "Nuk është dhënë (kërkesë e mëparshme)",
+    validation:
+      "Kontrollo të gjitha fushat e detyrueshme dhe vendos një numër të vlefshëm WhatsApp me kodin ndërkombëtar (duke filluar me +).",
     privacy:
       "Kam lexuar Politikën e Privatësisë dhe kuptoj si do të trajtohet kërkesa ime.",
     submit: "Dërgo kërkesën për akses",
@@ -162,7 +193,7 @@ export const goldCopy = {
     markConfirm:
       "E ke dërguar personalisht ftesën Telegram? Ky veprim regjistron kohën; nuk dërgon mesazh.",
     retry: "Ridërgo njoftimin me email",
-    search: "Kërko emrin, emailin ose ID e brokerit",
+    search: "Kërko emrin, emailin, WhatsApp ose ID e brokerit",
     all: "Të gjitha statuset",
     empty: "Nuk u gjetën kërkesa Gold Group.",
     select: "Zgjidh një kërkesë për shqyrtim.",

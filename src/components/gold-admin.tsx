@@ -6,6 +6,7 @@ type GoldRequest = {
   id: string;
   name: string;
   email: string;
+  phone: string | null;
   broker_id: string;
   status: (typeof goldStatuses)[number];
   created_at: string;
@@ -60,7 +61,7 @@ export function GoldAdmin({ lang }: { lang: Language }) {
   const filtered = requests.filter(
     (r) =>
       (!filter || r.status === filter) &&
-      `${r.name} ${r.email} ${r.broker_id}`
+      `${r.name} ${r.email} ${r.phone || ""} ${r.broker_id}`
         .toLowerCase()
         .includes(search.toLowerCase()),
   );
@@ -147,6 +148,20 @@ export function GoldAdmin({ lang }: { lang: Language }) {
                   <a href={`mailto:${item.email}`}>{item.email}</a>
                 </dd>
                 <dt>{t.fields[2]}</dt>
+                <dd>
+                  {item.phone ? (
+                    <a
+                      href={`https://wa.me/${item.phone.replace(/\D/g, "")}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.phone} ↗
+                    </a>
+                  ) : (
+                    t.notProvided
+                  )}
+                </dd>
+                <dt>{t.fields[3]}</dt>
                 <dd>{item.broker_id}</dd>
                 <dt>{t.submitted}</dt>
                 <dd>{date(item.created_at)}</dd>

@@ -17,7 +17,7 @@ export async function notifyGoldRequest(id: string) {
       from: process.env.EMAIL_FROM,
       to: "brunildazenunaj@gmail.com",
       subject: "BMM Gold Group — manual verification required",
-      text: `A Gold Group access request is awaiting manual review.\nName: ${data.name}\nEmail: ${data.email}\nTradeQuo Broker ID: ${data.broker_id}\n\nVerify registration and the required deposit in the official TradeQuo dashboard. Approve in the private BMM dashboard, personally send the invitation, then mark it as sent. No invitation has been sent automatically.`,
+      text: `A Gold Group access request is awaiting manual review.\nName: ${data.name}\nEmail: ${data.email}\nWhatsApp: ${data.phone || "Not provided (earlier request)"}\nTradeQuo Broker ID: ${data.broker_id}\n\nVerify registration and the required deposit in the official TradeQuo dashboard. Approve in the private BMM dashboard, personally send the invitation, then mark it as sent. No invitation has been sent automatically.`,
     },
     { idempotencyKey: `gold-request/${id}/admin` },
   );

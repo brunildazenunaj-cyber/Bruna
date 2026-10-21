@@ -1759,3 +1759,14 @@ footer {
     margin: 24px 0 18px;
   }
 }
+.required-star {
+  color: #b42318;
+  font-weight: 700;
+}
+.phone-hint {
+  display: block;
+  color: #686259;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
