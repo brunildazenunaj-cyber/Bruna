@@ -1564,7 +1564,8 @@ footer {
     serif;
   margin-bottom: 16px;
 }
-.launch-page .gold-form {
+.launch-page .gold-form,
+.launch-page .support-form {
   padding: 24px;
 }
 .launch-page .application-form label {
@@ -1740,7 +1741,8 @@ footer {
   .launch-page .application-form textarea {
     font-size: 16px;
   }
-  .launch-page .gold-form {
+  .launch-page .gold-form,
+  .launch-page .support-form {
     padding: 22px;
   }
   .launch-page .faq-section {
@@ -1769,4 +1771,40 @@ footer {
   font-size: 12px;
   line-height: 1.5;
   margin-top: 6px;
+}
+
+/* Help stays adjacent to access requests and works before registration. */
+.support-request {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line, #e9e2d6);
+}
+.support-details {
+  margin-top: 1rem;
+}
+.support-details > summary {
+  cursor: pointer;
+  width: fit-content;
+}
+.support-details[open] > summary {
+  margin-bottom: 1.5rem;
+}
+.help-card {
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e9e2d6;
+  border-radius: 12px;
+  background: white;
+  overflow-wrap: anywhere;
+}
+.help-message {
+  white-space: pre-wrap;
+}
+.support-admin > label {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.admin-tabs {
+  flex-wrap: wrap;
 }

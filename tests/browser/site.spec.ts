@@ -17,7 +17,7 @@ test("Albanian default, English switch, persistence and complete landing content
     await page
       .locator("main > section")
       .evaluateAll((sections) => sections.map((s) => s.id)),
-  ).toEqual(["intro", "gold", "tutorial", "academy", "apply", "faq"]);
+  ).toEqual(["intro", "gold", "tutorial", "academy", "apply"]);
   await expect(page.locator(".gold-steps > li")).toHaveCount(3);
   await expect(page.locator(".scanner-steps > li")).toHaveCount(5);
   await expect(
@@ -34,7 +34,8 @@ test("Albanian default, English switch, persistence and complete landing content
   );
   await expect(page.getByText("Founder", { exact: false })).toHaveCount(0);
   await page.locator("summary").first().click();
-  await expect(page.locator("details[open] p")).toBeVisible();
+  await expect(page.locator("#help form")).toBeVisible();
+  await expect(page.locator("#faq")).toHaveCount(0);
   await expect(page.getByText("€900")).toHaveCount(0);
 });
 test("mobile navigation and no horizontal overflow", async ({ page }) => {
@@ -393,4 +394,128 @@ test("real tutorial plays, pauses, seeks and supports range delivery on desktop 
     expect(await video.evaluate((v: HTMLVideoElement) => v.error)).toBeNull();
     await context.close();
   }
+});
+
+test("help form is bilingual, works without Broker ID and fails honestly without services", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  await page.locator("#help summary").click();
+  await expect(page.locator("#help textarea")).toBeVisible();
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+  await page.getByRole("button", { name: "EN", exact: true }).click();
+  const help = page.locator("#help");
+  await expect(help.getByRole("heading")).toHaveText("Stuck or need help?");
+  await expect(help.locator("[name=broker_id]")).toHaveCount(0);
+  await expect(
+    help.getByRole("link", { name: "Email Brunilda directly" }),
+  ).toHaveAttribute("href", "mailto:brunildazenunaj@gmail.com");
+  await help.locator("[name=name]").fill("Help Visitor");
+  await help.locator("[name=email]").fill("visitor@example.com");
+  await help.locator("[name=phone]").fill("+355691234567");
+  await help
+    .locator("[name=message]")
+    .fill("I cannot finish broker registration.");
+  await help.locator("[name=privacy]").check();
+  await help.getByRole("button", { name: "Send help request" }).click();
+  await expect(help.getByRole("alert")).toContainText("could not save");
+  await expect(help.locator("[name=message]")).toHaveValue(
+    "I cannot finish broker registration.",
+  );
+  // Isolated response fixture exercises success UI; no delivery claim.
+  await page.route("**/api/support-requests", (route) =>
+    route.fulfill({
+      status: 201,
+      contentType: "application/json",
+      body: '{"ok":true}',
+    }),
+  );
+  await help.getByRole("button", { name: "Send help request" }).click();
+  await expect(help.getByRole("status")).toContainText(
+    "help request has been saved",
+  );
+  expect((await request.get("/api/admin/support-requests")).status()).toBe(403);
+  for (const method of ["PATCH", "POST"])
+    expect(
+      (
+        await request.fetch("/api/admin/support-requests", {
+          method,
+          headers: { Origin: "http://127.0.0.1:3000" },
+          data: {},
+        })
+      ).status(),
+    ).toBe(403);
+  expect(
+    (
+      await request.post("/api/support-requests", {
+        headers: { Origin: "https://other.example" },
+        data: {},
+      })
+    ).status(),
+  ).toBe(403);
+  expect(
+    (
+      await request.post("/api/support-requests", {
+        headers: { Origin: "http://127.0.0.1:3000" },
+        data: {},
+      })
+    ).status(),
+  ).toBe(400);
+});
+
+test("Help dashboard separates requests and supports resolve, email retry and deletion with UI fixtures", async ({
+  page,
+}) => {
+  let items = [
+    {
+      id: "123e4567-e89b-42d3-a456-426614174000",
+      name: "Help Fixture",
+      email: "help@example.com",
+      phone: "+355691234567",
+      message: "I cannot complete registration.",
+      status: "New",
+      created_at: "2026-10-21T12:00:00Z",
+      admin_email_sent: false,
+    },
+  ];
+  await page.route("**/api/admin", (r) =>
+    r.fulfill({ json: { applications: [] } }),
+  );
+  await page.route("**/api/admin/support-requests", async (r) => {
+    if (r.request().method() === "GET")
+      return r.fulfill({ json: { requests: items } });
+    const body = r.request().postDataJSON();
+    if (r.request().method() === "POST") items[0].admin_email_sent = true;
+    else if (body.action === "delete") items = [];
+    else items[0].status = body.action === "resolve" ? "Resolved" : "New";
+    await r.fulfill({ json: { ok: true } });
+  });
+  await page.goto("/admin");
+  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await page.getByRole("tab", { name: "Help Requests" }).click();
+  await expect(page.getByText("I cannot complete registration.")).toBeVisible();
+  await expect(
+    page.locator('a[href="https://wa.me/355691234567"]'),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Mark resolved" }).click();
+  await expect(
+    page.getByRole("button", { name: "Reopen", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Retry notification email" }).click();
+  await expect(
+    page.getByText("Email notification sent", { exact: true }),
+  ).toBeVisible();
+  page.once("dialog", (d) => d.accept());
+  await page.getByRole("button", { name: "Delete", exact: true }).click();
+  await expect(page.getByText("No help requests yet.")).toBeVisible();
+  await page.getByRole("tab", { name: "Academy applications" }).click();
+  await expect(page.getByText("No applications found.")).toBeVisible();
 });

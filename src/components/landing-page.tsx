@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
-import { ArrowUpRight, Menu, X, Plus, Check } from "lucide-react";
+import { ArrowUpRight, Menu, X, Check } from "lucide-react";
 import { content } from "@/lib/content";
 import { useLanguage, LanguageSwitch } from "@/components/language";
+import { SupportForm } from "@/components/support-form";
+import { supportCopy } from "@/lib/support";
 import { ApplicationForm } from "@/components/application-form";
 import { GoldSection, GoldRequestForm } from "@/components/gold-section";
 import {
@@ -34,6 +36,9 @@ export function LandingPage({ tutorial }: { tutorial: TutorialAssets }) {
               {t.nav[i]}
             </a>
           ))}
+          <a href="#help" onClick={() => setMenu(false)}>
+            {supportCopy[lang].open}
+          </a>
         </nav>
         <div className="header-actions">
           <LanguageSwitch lang={lang} setLang={setLang} />
@@ -65,7 +70,10 @@ export function LandingPage({ tutorial }: { tutorial: TutorialAssets }) {
         <GoldSection lang={lang} />
         <section id="tutorial" className="section tutorial-section">
           <RegistrationTutorial lang={lang} assets={tutorial} />
-          <GoldRequestForm lang={lang} />
+          <div>
+            <GoldRequestForm lang={lang} />
+            <SupportForm lang={lang} />
+          </div>
         </section>
         <section id="academy" className="section compact-academy">
           <div>
@@ -97,20 +105,6 @@ export function LandingPage({ tutorial }: { tutorial: TutorialAssets }) {
             </a>
           </div>
           <ApplicationForm lang={lang} />
-        </section>
-        <section id="faq" className="section faq-section">
-          <h2>{t.faqTitle}</h2>
-          <div className="faq-list">
-            {t.faqs.map(([q, a]) => (
-              <details key={q}>
-                <summary>
-                  {q}
-                  <Plus size={18} />
-                </summary>
-                <p>{a}</p>
-              </details>
-            ))}
-          </div>
         </section>
       </main>
       <footer className="launch-footer">

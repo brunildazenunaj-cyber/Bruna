@@ -1,4 +1,6 @@
 "use client";
+import { SupportAdmin } from "@/components/support-admin";
+import { supportCopy } from "@/lib/support";
 import { GoldAdmin } from "@/components/gold-admin";
 import { goldCopy } from "@/lib/gold";
 import { useEffect, useState, useCallback } from "react";
@@ -168,7 +170,7 @@ const copy = {
   },
 };
 export default function Admin() {
-  const [tab, setTab] = useState<"academy" | "gold">("academy");
+  const [tab, setTab] = useState<"academy" | "gold" | "support">("academy");
   const [lang, setLang] = useLanguage(),
     t = copy[lang];
   const [logged, setLogged] = useState(false),
@@ -326,6 +328,13 @@ export default function Admin() {
           >
             {goldCopy[lang].tab}
           </button>
+          <button
+            role="tab"
+            aria-selected={tab === "support"}
+            onClick={() => setTab("support")}
+          >
+            {supportCopy[lang].tab}
+          </button>
         </div>
       )}
       {message && (tab === "academy" || !logged) && (
@@ -361,6 +370,8 @@ export default function Admin() {
             {busy ? t.loading : t.signIn}
           </button>
         </form>
+      ) : tab === "support" ? (
+        <SupportAdmin lang={lang} />
       ) : tab === "gold" ? (
         <GoldAdmin lang={lang} />
       ) : (

@@ -74,3 +74,13 @@ The real owner-supplied tutorial was downloaded after Drive access became availa
 Final tutorial validation: TypeScript checking and the production build passed; all 10 unit/integration tests and all 11 browser tests passed (21 total). The browser suite includes actual tutorial playback on desktop and mobile.
 
 This completes the outstanding video asset work. It does not establish production Supabase configuration, migration application, Resend inbox delivery or a successful Vercel deployment. Apply/verify migration 003 before enabling the updated WhatsApp form, following the preceding database instructions. Existing 001/002 migrations must not be rerun blindly.
+
+## Help requests update
+
+The public questions section is removed. A bilingual help form beside access requests accepts contact details and the issue without requiring broker registration. The navigation and a direct email link make help accessible.
+
+Before enabling live form submissions, check `select to_regclass('public.support_requests'), to_regprocedure('public.manage_support_request(uuid,uuid,text)');` in the correct Supabase project. If both are missing and migrations 001–003 are already installed, run all of `supabase/migrations/004_support_requests.sql` once (it includes BEGIN/COMMIT). If either exists, inspect its definition against migration 004 and investigate partial installation; do not blindly rerun any migration. This adds storage, RLS and audited resolution/deletion without changing Academy or Gold data.
+
+With production credentials, submit one controlled help request without a Broker ID, confirm it appears in **Help Requests**, and confirm receipt at brunildazenunaj@gmail.com with the correct reply-to and contact details. Verify email retry after a provider error, admin resolution/reopening/deletion and denial for anonymous/non-admin users. Delete the test record afterward. Live migration application and actual email delivery cannot be verified in this workspace without service access. Direct email remains an alternative.
+
+Local help-update validation: production build and TypeScript checking passed, all 12 unit/database tests passed, and all 13 browser tests passed. The help tests cover pre-registration submission, bilingual/mobile layout, honest unavailable-service behavior, protected endpoints, duplicate protection, private database permissions and audited admin actions. Successful browser form and dashboard states use isolated API fixtures, not live delivery.

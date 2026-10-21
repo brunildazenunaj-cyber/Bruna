@@ -12,7 +12,7 @@ export const legal = {
         ],
         [
           "Information and purpose",
-          "For Gold Group access we collect your full name, email, WhatsApp number and TradeQuo Broker ID to manually check registration and the required deposit, and to contact you about your access request. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator. We also collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
+          "For help requests we collect your name, email, WhatsApp number and description of the issue to respond and track its resolution. Do not submit passwords, trading credentials or payment details. For Gold Group access we collect your full name, email, WhatsApp number and TradeQuo Broker ID to manually check registration and the required deposit, and to contact you about your access request. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator. We also collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
         ],
         [
           "Providers and international transfers",
@@ -20,7 +20,7 @@ export const legal = {
         ],
         [
           "Retention and deletion",
-          "Proposed policy: remove inactive applications after 12 months unless there is a documented legal need to retain them. Administrators can permanently delete records. Backups and delivered emails follow provider retention rules and require separate handling. This policy requires business approval and a scheduled operational review.",
+          "Proposed policy: remove inactive help requests and applications after 12 months unless there is a documented legal need to retain them. Administrators can permanently delete records. Backups and delivered emails follow provider retention rules and require separate handling. This policy requires business approval and a scheduled operational review.",
         ],
         [
           "Your choices and rights",
@@ -91,6 +91,10 @@ export const legal = {
     privacy: {
       title: "Politika e Privatësisë",
       sections: [
+        [
+          "Kërkesat për ndihmë",
+          "Për të të ndihmuar, mbledhim emrin, emailin, numrin WhatsApp dhe përshkrimin e problemit. I përdorim për të të kontaktuar dhe për të ndjekur zgjidhjen. Mos dërgo fjalëkalime, kredenciale tregtimi apo të dhëna pagese. Politika e propozuar: fshirja e kërkesave joaktive pas 12 muajsh, përveç rasteve kur ka një detyrim ligjor për ruajtjen.",
+        ],
         [
           "Kush i trajton të dhënat",
           "Beyond Money Minds (BMM Academy), drejtuar nga Brunilda Zenunaj. Për kërkesa mbi privatësinë, shkruaj te brunildazenunaj@gmail.com. Emri ligjor i biznesit, adresa e regjistruar dhe juridiksioni përkatës duhet të konfirmohen para publikimit.",

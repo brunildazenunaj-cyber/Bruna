@@ -57,21 +57,6 @@ export const content = {
     formTitle: "Request Academy Access",
     formText:
       "Tell us a little about yourself. We’ll contact you personally to discuss membership and arrange a call.",
-    faqTitle: "A few useful answers",
-    faqs: [
-      [
-        "Is Gold Group access free?",
-        "BMM group membership is free, subject to eligibility and manual verification. The broker deposit is account funding, not a membership fee. Trading costs and the risk of losing capital still apply.",
-      ],
-      [
-        "When will I receive my Telegram invitation?",
-        "After submitting your request, an administrator checks your TradeQuo registration and deposit. If approved, they send the invitation personally. Provider activation is approximately 24 hours subject to provider confirmation; this is not a guaranteed invitation timeframe.",
-      ],
-      [
-        "What if I need help registering?",
-        "Follow the three steps and watch the tutorial when available. For broker activation, use official provider support. For BMM questions, email brunildazenunaj@gmail.com.",
-      ],
-    ],
     help: "Need help?",
     contact: "Contact BMM",
     skip: "Skip to content",
@@ -148,21 +133,6 @@ export const content = {
     formTitle: "Kërko akses në Akademi",
     formText:
       "Na trego pak për veten. Do të të kontaktojmë personalisht për të diskutuar anëtarësimin dhe për të caktuar një telefonatë.",
-    faqTitle: "Disa përgjigje të dobishme",
-    faqs: [
-      [
-        "A është falas aksesi në Gold Group?",
-        "Anëtarësimi në grupin BMM është falas, pas plotësimit të kushteve dhe verifikimit manual. Depozita financon llogarinë te brokeri; nuk është tarifë anëtarësimi. Kostot e tregtimit dhe risku i humbjes së kapitalit mbeten.",
-      ],
-      [
-        "Kur do ta marr ftesën për Telegram?",
-        "Pas kërkesës, administratori kontrollon regjistrimin dhe depozitën në TradeQuo. Nëse miratohesh, ftesa dërgohet personalisht. Aktivizimi nga ofruesi zgjat rreth 24 orë, sipas konfirmimit të tij; ky nuk është afat i garantuar për ftesën.",
-      ],
-      [
-        "Po nëse kam nevojë për ndihmë gjatë regjistrimit?",
-        "Ndiq tre hapat dhe shiko videon kur të jetë e disponueshme. Për aktivizimin, kontakto mbështetjen zyrtare të ofruesit. Për pyetje rreth BMM, shkruaj në brunildazenunaj@gmail.com.",
-      ],
-    ],
     help: "Ke nevojë për ndihmë?",
     contact: "Kontakto BMM",
     skip: "Kalo te përmbajtja",
