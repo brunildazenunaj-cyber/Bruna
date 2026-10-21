@@ -37,14 +37,14 @@ export const goldCopy = {
   en: {
     title: "BMM Gold Group",
     intro:
-      "Free group membership, subject to manual verification of your TradeQuo registration and required deposit. Broker funding and trading costs are separate from group membership.",
+      "Free access to Gold trading signals and information about the Cypher AI Scanner, subject to registration and eligibility requirements.",
     steps: [
-      "Register and activate your TradeQuo account using the referral link below. This is a referral link; BMM may receive compensation under the provider’s terms.",
-      "Open My ProTrader, select “Start Free”, choose TradeQuo if supported, and follow the provider’s official account and MT5 connection instructions. Never share your MT5 password here.",
-      "Complete the required account funding and use the provider’s “Send a Request” support option for activation. Confirm eligibility, restrictions and current deposit terms directly with TradeQuo.",
+      "Register and activate your TradeQuo account using the link below.",
+      "Complete setup on the official My ProTrader platform.",
+      "Complete the required deposit, then contact official provider support using “Send a Request” and provide your Broker User ID. Activation is approximately 24 hours, subject to provider confirmation.",
     ],
     deposit:
-      "Indicative broker funding: USD $200 for Albania, Kosovo, North Macedonia and other Balkan countries; USD $300 elsewhere, subject to confirmation of provider terms. This is money deposited with the broker, not a BMM fee. Trading can result in loss of capital. Activation timing is subject to provider confirmation.",
+      "Broker funding requirements, subject to provider confirmation: Balkans — $200 USD; other eligible regions — $300 USD. These funds are deposited into your broker account, not paid as a BMM membership fee. Trading capital is at risk; no profit is guaranteed.",
     broker: "Register with TradeQuo",
     provider: "Open My ProTrader",
     formTitle: "Request Telegram access",
@@ -95,18 +95,38 @@ export const goldCopy = {
     pending: "Pending",
     refresh: "Refresh",
     limit: "Latest 1,000 requests.",
+    stepTitles: [
+      "Broker registration",
+      "My ProTrader / Cypher Scanner",
+      "Final activation",
+    ],
+    scannerSteps: [
+      "Click START FREE.",
+      "Select a supported broker (TradeQuo or PuPrime, where available).",
+      "Create your My ProTrader account.",
+      "Enter the required Broker ID and email.",
+      "Follow official provider instructions to connect MT5.",
+    ],
+    credentials:
+      "Never submit your MT5 password or trading credentials to BMM.",
+    eligibility:
+      "Availability depends on your country and the broker’s restrictions. Confirm your eligibility and current terms directly with the provider before registering or funding an account. This BMM access form accepts TradeQuo Broker IDs; another broker’s availability on My ProTrader does not establish BMM eligibility.",
+    referral:
+      "Referral disclosure: this TradeQuo link is a referral link. BMM may receive compensation under the provider’s terms.",
+    requestLabel: "AFTER REGISTRATION",
+    privacyLink: "Privacy Policy",
   },
   sq: {
     title: "BMM Gold Group",
     intro:
-      "Anëtarësim falas në grup, pas verifikimit manual të regjistrimit në TradeQuo dhe depozitës së kërkuar. Financimi i llogarisë dhe kostot e tregtimit janë të ndara nga anëtarësimi.",
+      "Akses falas në sinjale tregtimi për arin dhe informacion rreth Cypher AI Scanner, sipas kushteve të regjistrimit dhe përshtatshmërisë.",
     steps: [
-      "Regjistrohu dhe aktivizo llogarinë TradeQuo përmes lidhjes së referimit më poshtë. BMM mund të marrë kompensim sipas kushteve të ofruesit.",
-      "Hap My ProTrader, zgjidh “Start Free”, zgjidh TradeQuo nëse mbështetet dhe ndiq udhëzimet zyrtare për llogarinë dhe lidhjen MT5. Mos dërgo kurrë këtu fjalëkalimin MT5.",
-      "Plotëso financimin e kërkuar dhe përdor opsionin “Send a Request” të ofruesit për aktivizim. Konfirmo drejtpërdrejt me TradeQuo përshtatshmërinë, kufizimet dhe kushtet aktuale të depozitës.",
+      "Regjistrohu dhe aktivizo llogarinë TradeQuo përmes lidhjes më poshtë.",
+      "Përfundo konfigurimin në platformën zyrtare My ProTrader.",
+      "Plotëso depozitën e kërkuar, pastaj kontakto mbështetjen zyrtare përmes “Send a Request” dhe jep Broker User ID. Aktivizimi zgjat rreth 24 orë, sipas konfirmimit të ofruesit.",
     ],
     deposit:
-      "Financimi orientues: USD $200 për Shqipërinë, Kosovën, Maqedoninë e Veriut dhe vendet e tjera të Ballkanit; USD $300 për vendet e tjera, sipas konfirmimit të ofruesit. Kjo është depozitë te brokeri, jo tarifë BMM. Tregtimi mund të sjellë humbje të kapitalit. Afati i aktivizimit varet nga konfirmimi i ofruesit.",
+      "Financimi i kërkuar, sipas konfirmimit të ofruesit: Ballkani — $200 USD; rajonet e tjera të pranueshme — $300 USD. Këto fonde depozitohen në llogarinë e brokerit, jo si tarifë anëtarësimi BMM. Kapitali është në risk; fitimi nuk garantohet.",
     broker: "Regjistrohu në TradeQuo",
     provider: "Hap My ProTrader",
     formTitle: "Kërko akses në Telegram",
@@ -157,5 +177,25 @@ export const goldCopy = {
     pending: "Në pritje",
     refresh: "Rifresko",
     limit: "1 000 kërkesat më të fundit.",
+    stepTitles: [
+      "Regjistrimi te brokeri",
+      "My ProTrader / Cypher Scanner",
+      "Aktivizimi përfundimtar",
+    ],
+    scannerSteps: [
+      "Kliko START FREE.",
+      "Zgjidh një broker të mbështetur (TradeQuo ose PuPrime, sipas disponueshmërisë).",
+      "Krijo llogarinë My ProTrader.",
+      "Vendos ID e brokerit dhe emailin e kërkuar.",
+      "Ndiq udhëzimet zyrtare të ofruesit për lidhjen MT5.",
+    ],
+    credentials:
+      "Mos i dërgo kurrë BMM-së fjalëkalimin MT5 ose kredenciale tregtimi.",
+    eligibility:
+      "Disponueshmëria varet nga shteti yt dhe kufizimet e brokerit. Konfirmo përshtatshmërinë dhe kushtet aktuale drejtpërdrejt me ofruesin para regjistrimit ose financimit. Ky formular BMM pranon ID të TradeQuo; prania e një brokeri tjetër në My ProTrader nuk konfirmon përshtatshmërinë për BMM.",
+    referral:
+      "Deklaratë referimi: kjo lidhje TradeQuo është lidhje referimi. BMM mund të marrë kompensim sipas kushteve të ofruesit.",
+    requestLabel: "PAS REGJISTRIMIT",
+    privacyLink: "Politika e Privatësisë",
   },
 };

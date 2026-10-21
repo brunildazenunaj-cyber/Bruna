@@ -5,16 +5,34 @@ test("Albanian default, English switch, persistence and complete landing content
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("lang", "sq");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Mëso. Zhvillohu.",
+    "Gjithçka që të duhet për të filluar.",
   );
   await page.getByRole("button", { name: "EN", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Learn. Grow.",
+    "Everything you need to get started.",
   );
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.locator(".topic-card")).toHaveCount(6);
-  await expect(page.locator(".schedule-list>div")).toHaveCount(6);
+  expect(
+    await page
+      .locator("main > section")
+      .evaluateAll((sections) => sections.map((s) => s.id)),
+  ).toEqual(["intro", "gold", "tutorial", "academy", "apply", "faq"]);
+  await expect(page.locator(".gold-steps > li")).toHaveCount(3);
+  await expect(page.locator(".scanner-steps > li")).toHaveCount(5);
+  await expect(
+    page.locator(".founder-section,.schedule,.membership,.topic-card"),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: "Get Free Gold Group Access", exact: true }),
+  ).toHaveAttribute("href", "#gold");
+  await expect(
+    page.getByRole("link", { name: "Explore BMM Academy", exact: true }),
+  ).toHaveAttribute("href", "#academy");
+  await expect(page.locator("#academy")).toContainText(
+    "10 scheduled live sessions weekly",
+  );
+  await expect(page.getByText("Founder", { exact: false })).toHaveCount(0);
   await page.locator("summary").first().click();
   await expect(page.locator("details[open] p")).toBeVisible();
   await expect(page.getByText("€900")).toHaveCount(0);
@@ -27,7 +45,7 @@ test("mobile navigation and no horizontal overflow", async ({ page }) => {
     .getByRole("navigation")
     .getByRole("link", { name: "Akademia", exact: true })
     .click();
-  await expect(page.getByRole("navigation")).not.toBeVisible();
+  await expect(page.locator("header nav")).not.toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -50,9 +68,9 @@ test("application validates and reports missing services without false success",
   await expect(page.locator("#apply [name=marketing]")).not.toBeChecked();
   await page.locator("#apply [name=privacy]").check();
   await page.getByRole("button", { name: "Send application" }).click();
-  await expect(page.locator("#apply .application-form [role=alert]")).toContainText(
-    "temporarily unavailable",
-  );
+  await expect(
+    page.locator("#apply .application-form [role=alert]"),
+  ).toContainText("temporarily unavailable");
   await expect(page.getByText("Your application has been saved.")).toHaveCount(
     0,
   );
@@ -185,4 +203,84 @@ test("Gold dashboard tab and manual controls with isolated UI fixtures", async (
   ).toBeVisible();
   await page.getByRole("tab", { name: "Academy applications" }).click();
   await expect(page.getByText("No applications found.")).toBeVisible();
+});
+
+test("tutorial missing state is honest and provider links match supplied URLs", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator(".tutorial-placeholder")).toContainText(
+    "Videoja e regjistrimit nuk është ende e disponueshme",
+  );
+  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await expect(page.locator(".tutorial-placeholder")).toContainText(
+    "not available yet",
+  );
+  await expect(page.locator("video")).toHaveCount(0);
+  await expect(page.locator("#gold a").first()).toHaveAttribute(
+    "href",
+    "https://my.tradequo.com/register?referral=01a1302d-ea82-716d-bfbd-00dc73bd1413",
+  );
+  await expect(
+    page.getByRole("link", { name: "Open My ProTrader", exact: false }),
+  ).toHaveAttribute("href", "https://app.myprotrader.com/");
+  await expect(page.locator("#gold")).toContainText("approximately 24 hours");
+  await expect(page.locator("#gold")).toContainText("$200 USD");
+  await expect(page.locator("#gold")).toContainText("$300 USD");
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
+});
+
+test("both forms keep separate payloads and confirmations using isolated API fixtures", async ({
+  page,
+}) => {
+  const posts: { url: string; data: Record<string, unknown> }[] = [];
+  for (const route of ["applications", "gold-requests"])
+    await page.route(`**/api/${route}`, async (r) => {
+      posts.push({ url: route, data: r.request().postDataJSON() });
+      await r.fulfill({ status: 201, json: { ok: true } });
+    });
+  await page.goto("/");
+  await page.getByRole("button", { name: "EN", exact: true }).click();
+  const gold = page.locator(".gold-form");
+  await gold.locator("[name=name]").fill("Controlled Gold Test");
+  await gold.locator("[name=email]").fill("gold@example.com");
+  await gold.locator("[name=broker_id]").fill("TQ123");
+  await gold.locator("[name=privacy]").check();
+  await gold.getByRole("button", { name: "Submit access request" }).click();
+  await expect(page.locator("#gold-request [role=status]")).toContainText(
+    "Pending Verification",
+  );
+  const academy = page.locator("#apply");
+  await academy.locator("[name=name]").fill("Controlled Academy Test");
+  await academy.locator("[name=email]").fill("academy@example.com");
+  await academy.locator("[name=phone]").fill("+355 69 123 4567");
+  await academy.locator("[name=country]").fill("Albania");
+  await academy
+    .locator("[name=reason]")
+    .fill("I want to learn about financial markets.");
+  await academy.locator("[name=privacy]").check();
+  await academy.getByRole("button", { name: "Send application" }).click();
+  await expect(academy.locator("[role=status]")).toContainText(
+    "Your application has been saved",
+  );
+  expect(posts.map((p) => p.url)).toEqual(["gold-requests", "applications"]);
+  expect(posts[0].data).toMatchObject({
+    broker_id: "TQ123",
+    privacy: true,
+    language: "en",
+  });
+  expect(posts[0].data).not.toHaveProperty("status");
+  expect(posts[1].data).toMatchObject({
+    marketing: false,
+    privacy: true,
+    language: "en",
+  });
+  expect(posts[1].data).not.toHaveProperty("broker_id");
 });

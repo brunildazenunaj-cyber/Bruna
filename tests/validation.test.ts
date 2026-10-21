@@ -6,6 +6,7 @@ import {
   statuses,
 } from "../src/lib/validation";
 import { content } from "../src/lib/content";
+import { goldCopy } from "../src/lib/gold";
 const valid = {
   name: "Test Person",
   email: "TEST@example.com",
@@ -55,10 +56,23 @@ test("admin updates restrict status, ID and notes", () => {
     false,
   );
 });
-test("both language catalogues have matching structure and six subjects", () => {
-  assert.deepEqual(Object.keys(content.en), Object.keys(content.sq));
-  assert.equal(content.en.topics.length, 6);
-  assert.equal(content.sq.topics.length, 6);
-  assert.equal(content.sq.sessions.length, 6);
-  assert.equal(content.en.faqs.length, 5);
+test("all public and Gold copy has matching translated structure", () => {
+  function compare(a: unknown, b: unknown) {
+    if (typeof a === "string") {
+      assert.equal(typeof b, "string");
+      assert.ok((b as string).trim());
+      return;
+    }
+    assert.deepEqual(Object.keys(a as object), Object.keys(b as object));
+    for (const key of Object.keys(a as object))
+      compare(
+        (a as Record<string, unknown>)[key],
+        (b as Record<string, unknown>)[key],
+      );
+  }
+  compare(content.en, content.sq);
+  compare(goldCopy.en, goldCopy.sq);
+  assert.equal(content.en.fields.length, 7);
+  assert.equal(goldCopy.en.steps.length, 3);
+  assert.equal(goldCopy.en.scannerSteps.length, 5);
 });

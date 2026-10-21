@@ -1,16 +1,18 @@
-# Beyond Money Minds — phases 1 and 2
+# Beyond Money Minds — launch implementation
 
-A bilingual, mobile-first Next.js App Router application for BMM Academy. Albanian is the default; the language switcher persists the choice locally. Public content is editable in `src/lib/content.ts`, legal drafts in `src/lib/legal.ts`. The founder portrait and Instagram remain explicitly labelled placeholders. No stock portrait is presented as the founder.
+A bilingual, mobile-first Next.js App Router application. Gold Group is the primary pathway; BMM Academy is a compact secondary option. Albanian is the default and the language switcher persists the choice locally. Public content is editable in `src/lib/content.ts` and `src/lib/gold.ts`; legal drafts are in `src/lib/legal.ts`.
+
+**Launch instructions and production verification:** [docs/LAUNCH.md](docs/LAUNCH.md). **Original video still required:** [public/videos/README.md](public/videos/README.md). The original MOV is absent; no substitute video is shown.
 
 ## Included
 
-- Responsive landing page, six education topics, the ten-session weekly schedule, six/twelve-month membership options, FAQs and bilingual legal drafts.
+- Minimal hero, three-step Gold Group onboarding, tutorial slot and Gold request form, compact Academy overview, existing Academy application form, three useful FAQs and legal footer. No biography, separate schedule section or separate membership promotion.
 - Academy application with server validation, a honeypot, persistent atomic IP-based rate limiting (five attempts/hour) and normalized-email uniqueness. Separate optional marketing consent records a timestamp; privacy acknowledgement records a policy version.
 - Supabase database migration with RLS and no anonymous/authenticated client access. All database operations use server routes. Membership prices exist only in the protected database configuration, never in client bundles.
 - Admin login through Supabase Auth, with an additional database allowlist checked on **every** protected request. No public signup UI. Search/filter, details, WhatsApp contact, notes/status updates, consent withdrawal, CSV export, permanent record deletion and statistics. Lists and exports show at most the newest 1,000 records; this limit is disclosed in the dashboard. Audit records contain actor, action and record ID, not applicant details.
 - Resend admin notification and applicant confirmation. Submission succeeds only after a database insert. Email failure does not lose the application: per-recipient delivery flags remain pending; administrators can retry from the dashboard. Resend idempotency keys reduce repeated delivery within its supported idempotency window. Retries after that window can duplicate delivery if a previous provider success was not recorded; review delivery logs before retrying older requests. No background mail worker or marketing campaigns are enabled.
 
-**Excluded:** tutorial video, automatic broker verification, automatic Telegram invitations, support-ticket system, payments and production deployment. Gold Group now provides instructions and manual access requests. Help currently opens a real email contact. Tutorial, automated integrations and the phase 5 launch review remain outstanding; basic implementation tests do not constitute a production security/compliance review.
+**Excluded:** automatic broker verification, automatic Telegram invitations, support-ticket system, payments and scheduling integrations. The responsive tutorial player is implemented but its actual owner-supplied footage and captions are missing. Help opens a real email contact. Basic implementation tests do not constitute completed production integration or legal review.
 
 ## Local development
 
@@ -39,7 +41,7 @@ Open the application on port 3000 using your development platform. `/admin` is t
 
 ### Email
 
-Set `RESEND_API_KEY` and `EMAIL_FROM` to a verified sending domain/address in Resend. `ADMIN_EMAIL` defaults to `brunildazenunaj@gmail.com`. Set `APP_URL` to your exact HTTPS deployment origin for same-origin request validation. Leave it unset locally unless it exactly matches your browser URL. Credentials are never embedded in templates or client code. Application emails are transactional, not marketing.
+Set `RESEND_API_KEY` and `EMAIL_FROM` to a verified sending domain/address in Resend. `ADMIN_EMAIL` defaults to `brunildazenunaj@gmail.com`. Set `APP_URL` to your exact HTTPS deployment origin for same-origin request validation. Leave it unset locally or for dynamic Vercel previews unless it exactly matches your browser URL. Credentials are never embedded in templates or client code. Application emails are transactional, not marketing.
 
 Verify both recipient deliveries with a controlled real application after credentials are installed. Check the dashboard delivery flags and provider logs. An email queued by the provider is not proof it reached an inbox. Resend test-domain recipient restrictions may prevent sending to arbitrary applicants; use a verified production domain.
 
@@ -64,7 +66,7 @@ Browser tests need Chromium: `npx playwright install chromium`. This cloud machi
 
 Deploy on Vercel or a compatible Node host; root directory is this repository. Build command `npm run build`. Configure the environment variables from `.env.example` in server settings and redeploy. HTTPS is provided by the host; secure authentication cookies are enabled in production. Mutation routes require a same-origin Origin header. Deploy behind a trusted proxy (such as Vercel) that sets the client IP; local/proxy-less rate limits may share one `unknown` bucket, and untrusted forwarded headers must not be accepted directly. Necessary outbound destinations are your exact Supabase project hostname and `api.resend.com`.
 
-Before launch: supply the real photograph and Instagram URL, approve editable founder copy, finalize legal business identity and legal policies, verify real Supabase/Resend flows, test backups/restoration and data deletion, and arrange qualified review of UK financial promotions, investment-advice, broker-referral and privacy rules. No analytics or non-essential cookies are enabled, so no consent banner is shown. If tracking is added, implement consent controls first. Run the separate phase 5 security and deployment review before claiming production readiness.
+Before launch: supply the original tutorial, finalize legal business identity and legal policies, verify real Supabase/Resend flows, test backups/restoration and data deletion, and arrange qualified review of UK financial promotions, investment-advice, broker-referral and privacy rules. No analytics or non-essential cookies are enabled, so no consent banner is shown. If tracking is added, implement consent controls first. Complete the production acceptance checks in docs/LAUNCH.md before claiming production readiness.
 
 
 ## Gold Group manual requests

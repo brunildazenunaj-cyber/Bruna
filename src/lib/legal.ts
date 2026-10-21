@@ -2,7 +2,7 @@ export const legal = {
   en: {
     draft:
       "Draft legal information — business identity and policies require review before launch.",
-    back: "Back to the Academy",
+    back: "Back to BMM",
     privacy: {
       title: "Privacy Policy",
       sections: [
@@ -87,7 +87,7 @@ export const legal = {
   sq: {
     draft:
       "Informacion ligjor paraprak — identiteti i biznesit dhe politikat kërkojnë rishikim para publikimit.",
-    back: "Kthehu te Akademia",
+    back: "Kthehu te BMM",
     privacy: {
       title: "Politika e Privatësisë",
       sections: [

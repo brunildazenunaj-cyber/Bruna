@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { goldCopy } from "@/lib/gold";
 import type { Language } from "@/lib/content";
-export function GoldSection({ lang }: { lang: Language }) {
+export function GoldRequestForm({ lang }: { lang: Language }) {
   const t = goldCopy[lang];
   const [state, setState] = useState("idle");
   const [error, setError] = useState("");
@@ -40,27 +40,98 @@ export function GoldSection({ lang }: { lang: Language }) {
     }
   }
   return (
+    <div id="gold-request" className="gold-request">
+      <p className="eyebrow">{t.requestLabel}</p>
+      <h3>{t.formTitle}</h3>
+      <p>{t.explain}</p>
+      {state === "success" ? (
+        <p role="status" className="success">
+          {t.success}
+        </p>
+      ) : (
+        <form className="application-form gold-form" onSubmit={submit}>
+          {["name", "email", "broker_id"].map((name, i) => (
+            <label key={name}>
+              {t.fields[i]}
+              <input
+                name={name}
+                type={name === "email" ? "email" : "text"}
+                autoComplete={name === "broker_id" ? "off" : name}
+                minLength={name === "name" ? 2 : 1}
+                maxLength={name === "name" ? 120 : name === "email" ? 254 : 80}
+                pattern={name === "broker_id" ? "[A-Za-z0-9_\\-]+" : undefined}
+                required
+              />
+            </label>
+          ))}
+          <div className="honeypot" aria-hidden="true">
+            <label>
+              Website
+              <input name="website" tabIndex={-1} autoComplete="off" />
+            </label>
+          </div>
+          <label className="checkbox">
+            <input type="checkbox" name="privacy" required />
+            <span>
+              {t.privacy}{" "}
+              <a
+                href={`/legal/privacy?lang=${lang}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t.privacyLink} ↗
+              </a>
+            </span>
+          </label>
+          {error && (
+            <p role="alert" className="error">
+              {error}
+            </p>
+          )}
+          <button className="button dark" disabled={state === "loading"}>
+            {state === "loading" ? t.sending : t.submit}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+export function GoldSection({ lang }: { lang: Language }) {
+  const t = goldCopy[lang];
+  return (
     <section id="gold" className="section gold-section">
-      <div>
+      <div className="gold-heading">
         <p className="eyebrow">BMM GOLD GROUP</p>
         <h2>{t.title}</h2>
         <p>{t.intro}</p>
-        <ol className="gold-steps">
-          {t.steps.map((s, i) => (
-            <li key={s}>
-              <strong>0{i + 1}</strong>
-              <p>{s}</p>
-              {i === 0 && (
+      </div>
+      <ol className="gold-steps">
+        {t.steps.map((s, i) => (
+          <li key={s}>
+            <span className="step-badge">0{i + 1}</span>
+            <h3>{t.stepTitles[i]}</h3>
+            <p>{s}</p>
+            {i === 0 && (
+              <>
                 <a
-                  className="text-link"
+                  className="button gold-button"
                   target="_blank"
                   rel="sponsored noreferrer"
                   href="https://my.tradequo.com/register?referral=01a1302d-ea82-716d-bfbd-00dc73bd1413"
                 >
                   {t.broker} ↗
                 </a>
-              )}
-              {i === 1 && (
+                <p className="step-note">{t.referral}</p>
+              </>
+            )}
+            {i === 1 && (
+              <>
+                <ol className="scanner-steps">
+                  {t.scannerSteps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
                 <a
                   className="text-link"
                   target="_blank"
@@ -69,69 +140,14 @@ export function GoldSection({ lang }: { lang: Language }) {
                 >
                   {t.provider} ↗
                 </a>
-              )}
-            </li>
-          ))}
-        </ol>
-        <p>{t.deposit}</p>
-      </div>
-      <div>
-        <h3>{t.formTitle}</h3>
-        <p>{t.explain}</p>
-        {state === "success" ? (
-          <p role="status" className="success">
-            {t.success}
-          </p>
-        ) : (
-          <form className="application-form gold-form" onSubmit={submit}>
-            {["name", "email", "broker_id"].map((name, i) => (
-              <label key={name}>
-                {t.fields[i]}
-                <input
-                  name={name}
-                  type={name === "email" ? "email" : "text"}
-                  autoComplete={name === "broker_id" ? "off" : name}
-                  minLength={name === "name" ? 2 : 1}
-                  maxLength={
-                    name === "name" ? 120 : name === "email" ? 254 : 80
-                  }
-                  pattern={
-                    name === "broker_id" ? "[A-Za-z0-9_\\-]+" : undefined
-                  }
-                  required
-                />
-              </label>
-            ))}
-            <div className="honeypot" aria-hidden="true">
-              <label>
-                Website
-                <input name="website" tabIndex={-1} autoComplete="off" />
-              </label>
-            </div>
-            <label className="checkbox">
-              <input type="checkbox" name="privacy" required />
-              <span>
-                {t.privacy}{" "}
-                <a
-                  href={`/legal/privacy?lang=${lang}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  ↗
-                </a>
-              </span>
-            </label>
-            {error && (
-              <p role="alert" className="error">
-                {error}
-              </p>
+                <p className="step-note">{t.credentials}</p>
+              </>
             )}
-            <button className="button dark" disabled={state === "loading"}>
-              {state === "loading" ? t.sending : t.submit}
-            </button>
-          </form>
-        )}
-      </div>
+            {i === 2 && <p className="deposit-note">{t.deposit}</p>}
+          </li>
+        ))}
+      </ol>
+      <p className="eligibility-note">{t.eligibility}</p>
     </section>
   );
 }
