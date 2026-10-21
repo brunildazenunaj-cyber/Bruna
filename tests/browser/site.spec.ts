@@ -210,18 +210,19 @@ test("Gold dashboard tab and manual controls with isolated UI fixtures", async (
   await expect(page.getByText("No applications found.")).toBeVisible();
 });
 
-test("tutorial missing state is honest and provider links match supplied URLs", async ({
+test("tutorial is available in both languages and provider links match supplied URLs", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page.locator(".tutorial-placeholder")).toContainText(
-    "Videoja e regjistrimit nuk është ende e disponueshme",
+  await expect(page.locator("video")).toBeVisible();
+  await expect(page.locator("video")).toHaveAccessibleName(
+    "Shiko videon e plotë, hap pas hapi.",
   );
+  await expect(page.locator(".tutorial-placeholder")).toHaveCount(0);
   await page.getByRole("button", { name: "EN", exact: true }).click();
-  await expect(page.locator(".tutorial-placeholder")).toContainText(
-    "not available yet",
+  await expect(page.locator("video")).toHaveAccessibleName(
+    "Watch the complete step-by-step tutorial.",
   );
-  await expect(page.locator("video")).toHaveCount(0);
   await expect(page.locator("#gold a").first()).toHaveAttribute(
     "href",
     "https://my.tradequo.com/register?referral=01a1302d-ea82-716d-bfbd-00dc73bd1413",
@@ -325,4 +326,71 @@ test("Gold required fields show red stars and WhatsApp is mandatory", async ({
   );
   await page.getByRole("button", { name: "SQ", exact: true }).click();
   await expect(form.getByText("Numri i WhatsApp")).toBeVisible();
+});
+
+test("real tutorial plays, pauses, seeks and supports range delivery on desktop and mobile", async ({
+  browser,
+  request,
+}) => {
+  const range = await request.get("/videos/bmm-registration.mp4", {
+    headers: { Range: "bytes=0-1023" },
+  });
+  expect(range.status()).toBe(206);
+  expect(range.headers()["content-type"]).toContain("video/mp4");
+  expect(range.headers()["content-range"]).toMatch(/^bytes 0-1023\//);
+  expect((await range.body()).length).toBe(1024);
+  for (const mobile of [false, true]) {
+    const context = await browser.newContext({
+      baseURL: "http://127.0.0.1:3000",
+      viewport: mobile
+        ? { width: 390, height: 844 }
+        : { width: 1440, height: 1000 },
+      isMobile: mobile,
+      hasTouch: mobile,
+    });
+    const page = await context.newPage();
+    await page.goto("/");
+    const video = page.locator("video");
+    await expect(video).toHaveAttribute("controls", "");
+    await expect(video).toHaveAttribute("playsinline", "");
+    await expect(video).toHaveAttribute("preload", "none");
+    expect(await video.evaluate((v: HTMLVideoElement) => v.autoplay)).toBe(
+      false,
+    );
+    expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+    // Mute only in this automated test context; production playback keeps native sound controls.
+    await video.evaluate(async (v: HTMLVideoElement) => {
+      v.muted = true;
+      await v.play();
+    });
+    await expect
+      .poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime))
+      .toBeGreaterThan(0.25);
+    const duration = await video.evaluate((v: HTMLVideoElement) => {
+      v.pause();
+      return v.duration;
+    });
+    expect(duration).toBeGreaterThan(300);
+    expect(duration).toBeLessThan(303);
+    await video.evaluate((v: HTMLVideoElement) => {
+      v.currentTime = v.duration - 10;
+    });
+    await expect
+      .poll(() =>
+        video.evaluate(
+          (v: HTMLVideoElement) =>
+            !v.seeking && Math.abs(v.currentTime - (v.duration - 10)) < 1,
+        ),
+      )
+      .toBe(true);
+    await video.evaluate(async (v: HTMLVideoElement) => {
+      await v.play();
+    });
+    await expect
+      .poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime))
+      .toBeGreaterThan(duration - 9.8);
+    await video.evaluate((v: HTMLVideoElement) => v.pause());
+    expect(await video.evaluate((v: HTMLVideoElement) => v.error)).toBeNull();
+    await context.close();
+  }
 });

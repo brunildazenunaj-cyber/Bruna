@@ -41,7 +41,7 @@ Email failures do not discard saved requests. Pending flags and dashboard retry 
 
 ## Tutorial
 
-The original `IMG_4549.MOV` is absent. See `public/videos/README.md` for the exact asset location, H.264/AAC conversion command and optional caption paths. Until it is supplied the page shows an honest unavailable state. A poster is included; it is not substitute footage.
+The owner-supplied video is now present at `public/videos/bmm-registration.mp4`: 9.65 MiB, H.264/AAC, 1280×800, 5:02. The original is preserved separately and was not modified. See `public/videos/README.md` for conversion details and checksums. No captions were supplied. A normal Vercel build detects and serves the included MP4; there is no Google Drive dependency at playback time.
 
 ## Vercel readiness
 
@@ -57,7 +57,7 @@ External URL check: the supplied TradeQuo and My ProTrader destinations were ret
 - `npm test`: 10 passed. Includes ephemeral PostgreSQL migration/permissions/transition tests, read-only migration preflight checks and tutorial markup checks. These do not touch production.
 - `npm run build`: passed with the existing Next.js stack.
 - Browser suite: 9 passed with system Chromium against the production build. Includes Albanian default and English persistence, exact section order, responsive widths from 320 to 1440 pixels, both form error paths, isolated success UI fixtures, access denial, Gold manual controls and legal routes.
-- Desktop/mobile rendered layouts reviewed. No owner video was played because it is absent. No actual notification email was sent or confirmed. Live migration status, production Auth and live submissions remain unverified because service access is unavailable.
+- Desktop/mobile rendered layouts reviewed. At the initial landing-page review the video was absent; the later tutorial integration below supersedes that limitation. No actual notification email was sent or confirmed. Live migration status, production Auth and live submissions remain unverified because service access is unavailable.
 
 ## Required WhatsApp contact update
 
@@ -66,3 +66,11 @@ Before deploying the new four-field Gold form, check `information_schema.columns
 The database column permits NULL for historical requests. The new public API requires a valid international phone number for every new submission. Existing requests remain reviewable and show “Not provided (earlier request)”; no fabricated numbers are added. Academy storage and notifications are unchanged. Gold privacy acknowledgement now uses version `2026-10-gold-whatsapp`.
 
 The phone is included in Gold admin notification emails and in the private dashboard with a user-initiated WhatsApp link. The website does not send WhatsApp messages or Telegram invitations automatically. Confirm the phone is saved and the admin email contains it in the controlled production acceptance test after applying 003. This migration has been tested locally; production application is not confirmed without database access.
+
+## Tutorial completion
+
+The real owner-supplied tutorial was downloaded after Drive access became available and optimized from 76.2 MiB to 9.65 MiB. The complete audio stream decodes successfully and contains audio; the full video is checked for decoding errors. The original duration and resolution are preserved and fast-start MP4 metadata is verified. Browser tests use the actual MP4 for desktop/mobile play, pause, seeking and HTTP range delivery; missing-file behavior remains covered separately. Automated browser playback is muted only in the test context. Caption files were not supplied.
+
+Final tutorial validation: TypeScript checking and the production build passed; all 10 unit/integration tests and all 11 browser tests passed (21 total). The browser suite includes actual tutorial playback on desktop and mobile.
+
+This completes the outstanding video asset work. It does not establish production Supabase configuration, migration application, Resend inbox delivery or a successful Vercel deployment. Apply/verify migration 003 before enabling the updated WhatsApp form, following the preceding database instructions. Existing 001/002 migrations must not be rerun blindly.
