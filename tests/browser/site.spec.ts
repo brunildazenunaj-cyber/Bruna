@@ -415,9 +415,7 @@ test("help form is bilingual, works without Broker ID and fails honestly without
   const help = page.locator("#help");
   await expect(help.getByRole("heading")).toHaveText("Stuck or need help?");
   await expect(help.locator("[name=broker_id]")).toHaveCount(0);
-  await expect(
-    help.getByRole("link", { name: "Email Brunilda directly" }),
-  ).toHaveAttribute("href", "mailto:brunildazenunaj@gmail.com");
+  await expect(help.locator('a[href^="mailto:"]')).toHaveCount(0);
   await help.locator("[name=name]").fill("Help Visitor");
   await help.locator("[name=email]").fill("visitor@example.com");
   await help.locator("[name=phone]").fill("+355691234567");

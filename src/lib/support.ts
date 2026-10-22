@@ -26,10 +26,9 @@ export const supportCopy = {
     success:
       "Your help request has been saved. We will contact you using the details you provided.",
     error:
-      "We could not save your help request. Please try again or email us directly below.",
+      "We could not save your help request. Please try again later.",
     duplicate:
-      "We already received this message. You can email us below if you need to add anything.",
-    email: "Email Brunilda directly",
+      "We already received this message. Submit a new message if you need to add details.",
     tab: "Help Requests",
     empty: "No help requests yet.",
     resolve: "Mark resolved",
@@ -60,10 +59,9 @@ export const supportCopy = {
     success:
       "Kërkesa jote për ndihmë u ruajt. Do të të kontaktojmë përmes të dhënave që na dërgove.",
     error:
-      "Kërkesa nuk u ruajt. Provo përsëri ose na shkruaj drejtpërdrejt në email më poshtë.",
+      "Kërkesa nuk u ruajt. Provo përsëri më vonë.",
     duplicate:
-      "E kemi marrë tashmë këtë mesazh. Nëse dëshiron të shtosh diçka, na shkruaj në email më poshtë.",
-    email: "Shkruaji Brunildës në email",
+      "E kemi marrë tashmë këtë mesazh. Nëse dëshiron të shtosh diçka, dërgo një mesazh të ri.",
     tab: "Kërkesa për ndihmë",
     empty: "Ende nuk ka kërkesa për ndihmë.",
     resolve: "Shëno si të zgjidhur",

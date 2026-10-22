@@ -83,6 +83,6 @@ Local tests cover both migrations, cross-flow isolation, authorization, valid/in
 
 ## Help requests
 
-The FAQ section has been removed. Visitors can open “I need help” beside the Telegram request form or from the navigation. Required name, email, international WhatsApp number, issue description and privacy acknowledgement are collected; Broker ID is not required. A direct email link remains available even if the form service is unavailable.
+The FAQ section has been removed. Visitors can open “I need help” beside the Telegram request form or from the navigation. Required name, email, international WhatsApp number, issue description and privacy acknowledgement are collected; Broker ID is not required. The help section offers only the help form; its direct email link has been removed.
 
 Apply `supabase/migrations/004_support_requests.sql` once after the existing migrations, following `docs/LAUNCH.md`. This adds private support storage and an audited admin management function without changing Academy or Gold tables. The same Supabase and Resend server credentials are used. Requests notify brunildazenunaj@gmail.com; failed notifications remain visible for retry under **Help Requests** in the dashboard. Admins can search, contact by email/WhatsApp, resolve, reopen and permanently delete requests. Exact repeated email/phone/message submissions are rejected; new messages are allowed. Public requests have a honeypot, server validation and five-attempts/hour rate limit. No marketing consent or Telegram approval is implied by a help request.

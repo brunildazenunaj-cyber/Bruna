@@ -46,9 +46,6 @@ export function SupportForm({ lang }: { lang: Language }) {
     <div id="help" className="gold-request support-request">
       <h3>{t.title}</h3>
       <p>{t.intro}</p>
-      <a className="text-link" href="mailto:brunildazenunaj@gmail.com">
-        {t.email} ↗
-      </a>
       <details className="support-details">
         <summary className="button secondary-button">{t.open}</summary>
         {state === "success" ? (
