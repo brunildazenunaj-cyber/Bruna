@@ -8,11 +8,11 @@ export const legal = {
       sections: [
         [
           "Who handles your data",
-          "Beyond Money Minds (BMM Academy), operated by Brunilda Zenunaj. Contact brunildazenunaj@gmail.com for privacy requests. The legal business name, registered address and applicable jurisdiction must be confirmed before launch.",
+          "Beyond Money Minds (BMM Gold Group), operated by Brunilda Zenunaj. Contact brunildazenunaj@gmail.com for privacy requests. The legal business name, registered address and applicable jurisdiction must be confirmed before launch.",
         ],
         [
           "Information and purpose",
-          "For help requests we collect your name, email, WhatsApp number and description of the issue to respond and track its resolution. Do not submit passwords, trading credentials or payment details. For Gold Group access we collect your full name, email, WhatsApp number and TradeQuo Broker ID to manually check registration and the required deposit, and to contact you about your access request. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator. We also collect the information you submit in the Academy application: name, email, WhatsApp number, country, experience, learning goals and preferred membership duration. We use it to respond to your request and manage the application. Processing to respond to a prospective membership enquiry is separate from optional marketing consent.",
+          "For help requests we collect your name, email, WhatsApp number and description of the issue to respond and track its resolution. Do not submit passwords, trading credentials or payment details. For Gold Group access we collect your full name, email, WhatsApp number and TradeQuo Broker ID to manually check registration and the required deposit, and to contact you about your access request. Approval and invitation-sent actions are recorded. Invitations are sent personally by the administrator.",
         ],
         [
           "Providers and international transfers",
@@ -20,7 +20,7 @@ export const legal = {
         ],
         [
           "Retention and deletion",
-          "Proposed policy: remove inactive help requests and applications after 12 months unless there is a documented legal need to retain them. Administrators can permanently delete records. Backups and delivered emails follow provider retention rules and require separate handling. This policy requires business approval and a scheduled operational review.",
+          "Proposed policy: remove inactive help and access requests after 12 months unless there is a documented legal need to retain them. Administrators can permanently delete records. Backups and delivered emails follow provider retention rules and require separate handling. This policy requires business approval and a scheduled operational review.",
         ],
         [
           "Your choices and rights",
@@ -40,8 +40,8 @@ export const legal = {
           "BMM offers financial education and general information. Content is not personalised financial, investment, tax or legal advice.",
         ],
         [
-          "Applications and membership",
-          "Submitting an application does not create membership or a payment obligation. Membership details and applicable contractual terms are discussed personally before purchase.",
+          "Gold Group access",
+          "Submitting a request does not guarantee access. Gold Group membership is free, subject to manual verification of registration and the required broker deposit. Broker funding and trading costs are separate from BMM membership.",
         ],
         [
           "Acceptable use",
@@ -49,7 +49,7 @@ export const legal = {
         ],
         [
           "Before launch",
-          "The operator’s legal identity, governing law, consumer cancellation rights and final membership contract require professional review.",
+          "The operator’s legal identity, governing law, applicable consumer rights and service terms require professional review.",
         ],
       ],
     },
@@ -97,11 +97,11 @@ export const legal = {
         ],
         [
           "Kush i trajton të dhënat",
-          "Beyond Money Minds (BMM Academy), drejtuar nga Brunilda Zenunaj. Për kërkesa mbi privatësinë, shkruaj te brunildazenunaj@gmail.com. Emri ligjor i biznesit, adresa e regjistruar dhe juridiksioni përkatës duhet të konfirmohen para publikimit.",
+          "Beyond Money Minds (BMM Gold Group), drejtuar nga Brunilda Zenunaj. Për kërkesa mbi privatësinë, shkruaj te brunildazenunaj@gmail.com. Emri ligjor i biznesit, adresa e regjistruar dhe juridiksioni përkatës duhet të konfirmohen para publikimit.",
         ],
         [
           "Të dhënat dhe qëllimi",
-          "Për aksesin në Gold Group mbledhim emrin, emailin, numrin e WhatsApp dhe ID e brokerit TradeQuo për verifikimin manual të regjistrimit dhe depozitës, si dhe për të të kontaktuar për kërkesën e aksesit. Regjistrohen miratimi dhe dërgimi i ftesës. Administratori e dërgon ftesën personalisht. Gjithashtu mbledhim të dhënat që dërgon në aplikim: emrin, emailin, numrin e WhatsApp, shtetin, përvojën, synimet dhe kohëzgjatjen e preferuar. I përdorim për t’iu përgjigjur kërkesës dhe për të menaxhuar aplikimin. Trajtimi i kërkesës për anëtarësim është i veçantë nga pëlqimi opsional për marketing.",
+          "Për aksesin në Gold Group mbledhim emrin, emailin, numrin e WhatsApp dhe ID e brokerit TradeQuo për verifikimin manual të regjistrimit dhe depozitës, si dhe për të të kontaktuar për kërkesën e aksesit. Regjistrohen miratimi dhe dërgimi i ftesës. Administratori e dërgon ftesën personalisht.",
         ],
         [
           "Ofruesit dhe transferimet ndërkombëtare",
@@ -109,7 +109,7 @@ export const legal = {
         ],
         [
           "Ruajtja dhe fshirja",
-          "Politika e propozuar: aplikimet joaktive fshihen pas 12 muajsh, përveç rasteve kur ekziston një detyrim ligjor i dokumentuar. Administratorët mund t’i fshijnë përgjithmonë. Kopjet rezervë dhe emailet e dërguara ndjekin rregullat e ofruesve dhe kërkojnë trajtim më vete. Politika kërkon miratim nga biznesi dhe kontrolle të planifikuara.",
+          "Politika e propozuar: kërkesat joaktive fshihen pas 12 muajsh, përveç rasteve kur ekziston një detyrim ligjor i dokumentuar. Administratorët mund t’i fshijnë përgjithmonë. Kopjet rezervë dhe emailet e dërguara ndjekin rregullat e ofruesve dhe kërkojnë trajtim më vete. Politika kërkon miratim nga biznesi dhe kontrolle të planifikuara.",
         ],
         [
           "Zgjedhjet dhe të drejtat e tua",
@@ -129,8 +129,8 @@ export const legal = {
           "BMM ofron edukim financiar dhe informacion të përgjithshëm. Përmbajtja nuk është këshillim i personalizuar financiar, investimi, tatimor apo ligjor.",
         ],
         [
-          "Aplikimi dhe anëtarësimi",
-          "Dërgimi i aplikimit nuk krijon anëtarësim ose detyrim pagese. Detajet dhe kushtet përkatëse diskutohen personalisht para blerjes.",
+          "Aksesi në Gold Group",
+          "Dërgimi i kërkesës nuk garanton akses. Anëtarësimi në Gold Group është falas, pas verifikimit manual të regjistrimit dhe depozitës së kërkuar. Financimi i brokerit dhe kostot e tregtimit janë të veçanta nga anëtarësimi në BMM.",
         ],
         [
           "Përdorimi i lejuar",
@@ -138,7 +138,7 @@ export const legal = {
         ],
         [
           "Para publikimit",
-          "Identiteti ligjor i operatorit, ligji i zbatueshëm, të drejtat e anulimit dhe kontrata përfundimtare e anëtarësimit kërkojnë rishikim profesional.",
+          "Identiteti ligjor i operatorit, ligji i zbatueshëm, të drejtat e konsumatorit dhe kushtet e shërbimit kërkojnë rishikim profesional.",
         ],
       ],
     },

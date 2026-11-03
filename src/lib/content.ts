@@ -1,62 +1,17 @@
 export const content = {
   en: {
-    apply: "Request Academy Access",
-    fields: [
-      "Full name",
-      "Email address",
-      "WhatsApp number",
-      "Country",
-      "Experience level",
-      "Why would you like to join?",
-      "Preferred membership duration",
-    ],
-    experiences: ["Beginner", "Some experience", "Experienced"],
-    durations: ["6 months", "12 months", "Not sure yet"],
-    privacy:
-      "I have read the Privacy Policy and acknowledge how my application data will be used.",
-    marketing:
-      "I’d like to receive occasional educational updates and offers. (Optional)",
-    submit: "Send application",
-    sending: "Sending…",
-    successTitle: "Thank you for reaching out.",
-    success:
-      "Your application has been saved. We’ll contact you personally about your next steps.",
-    errors: {
-      validation:
-        "Please check all fields. Use an international phone number beginning with + and tell us a little more about your goals.",
-      rate: "Too many attempts. Please try again in one hour.",
-      duplicate:
-        "An application already exists for this email. Please contact us if you need to update it.",
-      unavailable:
-        "Applications are temporarily unavailable. Your submission has not been confirmed. Please try again later.",
-      origin: "Please reload this page and try again.",
-    },
     legal: [
       "Privacy Policy",
       "Terms of Use",
       "Risk Disclaimer",
       "Affiliate Disclosure",
     ],
-    required: "All fields are required unless marked optional.",
-    reasonPlaceholder: "Share your interests and what you hope to learn…",
     risk: "Education, not investment advice. Trading and investing involve risk, including loss of capital. No outcome or return is guaranteed.",
-    nav: ["Gold Group", "Tutorial", "Academy"],
+    nav: ["Gold Group", "Tutorial"],
     hero: "Everything you need to get started.",
     intro:
-      "Access BMM Gold Group, explore the Cypher AI Scanner, or discover financial education with BMM Academy.",
+      "Access BMM Gold Group and explore the Cypher AI Scanner. Follow the registration steps below to request access.",
     goldCta: "Get Free Gold Group Access",
-    academyCta: "Explore BMM Academy",
-    academyTitle: "BMM Academy",
-    academyText:
-      "Beyond Money Minds is a financial education academy covering Forex, Cryptocurrency, Stock Investing, Artificial Intelligence and Personal Development.",
-    academyFacts: [
-      "10 scheduled live sessions weekly",
-      "Education for beginners",
-      "6-month and 12-month memberships",
-    ],
-    formTitle: "Request Academy Access",
-    formText:
-      "Tell us a little about yourself. We’ll contact you personally to discuss membership and arrange a call.",
     help: "Need help?",
     contact: "Contact BMM",
     skip: "Skip to content",
@@ -75,64 +30,18 @@ export const content = {
     privacyLink: "Privacy Policy",
   },
   sq: {
-    apply: "Kërko akses në Akademi",
-    fields: [
-      "Emri dhe mbiemri",
-      "Adresa e emailit",
-      "Numri i WhatsApp",
-      "Shteti",
-      "Niveli i përvojës",
-      "Pse dëshiron t’i bashkohesh Akademisë?",
-      "Kohëzgjatja e preferuar e anëtarësimit",
-    ],
-    experiences: ["Fillestar/e", "Pak përvojë", "Me përvojë"],
-    durations: ["6 muaj", "12 muaj", "Ende nuk jam i/e sigurt"],
-    privacy:
-      "Kam lexuar Politikën e Privatësisë dhe jam njohur me mënyrën si përdoren të dhënat e aplikimit tim.",
-    marketing:
-      "Dëshiroj të marr herë pas here përditësime edukative dhe oferta. (Opsionale)",
-    submit: "Dërgo aplikimin",
-    sending: "Duke dërguar…",
-    successTitle: "Faleminderit për interesin.",
-    success:
-      "Aplikimi yt u ruajt. Do të të kontaktojmë personalisht për hapat e ardhshëm.",
-    errors: {
-      validation:
-        "Kontrollo të gjitha fushat. Përdor një numër ndërkombëtar që fillon me + dhe na trego pak më shumë për synimet e tua.",
-      rate: "Shumë përpjekje. Provo përsëri pas një ore.",
-      duplicate:
-        "Ekziston një aplikim me këtë email. Na kontakto nëse dëshiron ta përditësosh.",
-      unavailable:
-        "Aplikimet janë përkohësisht të padisponueshme. Dërgimi nuk është konfirmuar. Provo përsëri më vonë.",
-      origin: "Rifresko faqen dhe provo përsëri.",
-    },
     legal: [
       "Politika e Privatësisë",
       "Kushtet e Përdorimit",
       "Deklarata e Riskut",
       "Deklarata e Referimeve",
     ],
-    required:
-      "Të gjitha fushat janë të detyrueshme, përveç atyre të shënuara si opsionale.",
-    reasonPlaceholder: "Na trego interesat dhe çfarë dëshiron të mësosh…",
     risk: "Edukim, jo këshillim investimi. Tregtimi dhe investimi mbartin risk, përfshirë humbjen e kapitalit. Asnjë rezultat apo fitim nuk garantohet.",
-    nav: ["Gold Group", "Video udhëzuese", "Akademia"],
+    nav: ["Gold Group", "Video udhëzuese"],
     hero: "Gjithçka që të duhet për të filluar.",
     intro:
-      "Bashkohu me BMM Gold Group, zbulo Cypher AI Scanner ose njihu me edukimin financiar në BMM Academy.",
+      "Bashkohu me BMM Gold Group dhe zbulo Cypher AI Scanner. Ndiq hapat e regjistrimit më poshtë për të kërkuar akses.",
     goldCta: "Kërko akses falas në Gold Group",
-    academyCta: "Zbulo BMM Academy",
-    academyTitle: "BMM Academy",
-    academyText:
-      "Beyond Money Minds është një akademi e edukimit financiar që mbulon Forex, kriptomonedhat, investimin në aksione, inteligjencën artificiale dhe zhvillimin personal.",
-    academyFacts: [
-      "10 seanca live të planifikuara çdo javë",
-      "Edukim për fillestarë",
-      "Anëtarësim 6 ose 12-mujor",
-    ],
-    formTitle: "Kërko akses në Akademi",
-    formText:
-      "Na trego pak për veten. Do të të kontaktojmë personalisht për të diskutuar anëtarësimin dhe për të caktuar një telefonatë.",
     help: "Ke nevojë për ndihmë?",
     contact: "Kontakto BMM",
     skip: "Kalo te përmbajtja",

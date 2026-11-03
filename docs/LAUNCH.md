@@ -1,3 +1,7 @@
+# Current release — Gold Group only
+
+The current site and private dashboard serve Gold Group and help requests only. Academy content, application submission API, administration operations and emails have been retired. Historical applicant records and migration files are preserved; no production data is deleted and no new migration is required. Older rollout notes below describe the previous offering and are not current product requirements. Verify Gold/help submissions and their notification emails for this release. The admin session endpoint now checks authorization without querying applications.
+
 # BMM launch handoff
 
 ## Production status and credentials

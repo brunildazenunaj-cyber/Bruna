@@ -17,7 +17,7 @@ test("Albanian default, English switch, persistence and complete landing content
     await page
       .locator("main > section")
       .evaluateAll((sections) => sections.map((s) => s.id)),
-  ).toEqual(["intro", "gold", "tutorial", "academy", "apply"]);
+  ).toEqual(["intro", "gold", "tutorial"]);
   await expect(page.locator(".gold-steps > li")).toHaveCount(3);
   await expect(page.locator(".scanner-steps > li")).toHaveCount(5);
   await expect(
@@ -26,12 +26,8 @@ test("Albanian default, English switch, persistence and complete landing content
   await expect(
     page.getByRole("link", { name: "Get Free Gold Group Access", exact: true }),
   ).toHaveAttribute("href", "#gold");
-  await expect(
-    page.getByRole("link", { name: "Explore BMM Academy", exact: true }),
-  ).toHaveAttribute("href", "#academy");
-  await expect(page.locator("#academy")).toContainText(
-    "10 scheduled live sessions weekly",
-  );
+  await expect(page.locator("body")).not.toContainText(/Academy|Akademi/);
+  await expect(page.locator('a[href="#academy"],#apply')).toHaveCount(0);
   await expect(page.getByText("Founder", { exact: false })).toHaveCount(0);
   await page.locator("summary").first().click();
   await expect(page.locator("#help form")).toBeVisible();
@@ -44,7 +40,7 @@ test("mobile navigation and no horizontal overflow", async ({ page }) => {
   await page.getByRole("button", { name: "Hap menynë" }).click();
   await page
     .getByRole("navigation")
-    .getByRole("link", { name: "Akademia", exact: true })
+    .getByRole("link", { name: "Video udhëzuese", exact: true })
     .click();
   await expect(page.locator("header nav")).not.toBeVisible();
   expect(
@@ -53,28 +49,6 @@ test("mobile navigation and no horizontal overflow", async ({ page }) => {
     ),
   ).toBe(true);
   await page.screenshot({ path: "/tmp/bmm-mobile.png", fullPage: true });
-});
-test("application validates and reports missing services without false success", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "EN", exact: true }).click();
-  await page.locator("#apply [name=name]").fill("Test Applicant");
-  await page.locator("#apply [name=email]").fill("test@example.com");
-  await page.locator("#apply [name=phone]").fill("+355 69 123 4567");
-  await page.locator("#apply [name=country]").fill("Albania");
-  await page
-    .locator("[name=reason]")
-    .fill("I would like to learn about financial markets.");
-  await expect(page.locator("#apply [name=marketing]")).not.toBeChecked();
-  await page.locator("#apply [name=privacy]").check();
-  await page.getByRole("button", { name: "Send application" }).click();
-  await expect(
-    page.locator("#apply .application-form [role=alert]"),
-  ).toContainText("temporarily unavailable");
-  await expect(page.getByText("Your application has been saved.")).toHaveCount(
-    0,
-  );
 });
 test("admin API denies unauthenticated reads and mutations; cross-origin submissions denied", async ({
   request,
@@ -92,7 +66,7 @@ test("admin API denies unauthenticated reads and mutations; cross-origin submiss
     ).toBe(false);
   expect(
     (
-      await request.post("/api/applications", {
+      await request.post("/api/gold-requests", {
         headers: { Origin: "https://other.example" },
         data: {},
       })
@@ -100,7 +74,7 @@ test("admin API denies unauthenticated reads and mutations; cross-origin submiss
   ).toBe(403);
   expect(
     (
-      await request.post("/api/applications", {
+      await request.post("/api/gold-requests", {
         headers: { Origin: "http://127.0.0.1:3000" },
         data: {},
       })
@@ -162,9 +136,7 @@ test("Gold dashboard tab and manual controls with isolated UI fixtures", async (
     invitation_sent_at: null as string | null,
     admin_email_sent: true,
   };
-  await page.route("**/api/admin", (r) =>
-    r.fulfill({ json: { applications: [] } }),
-  );
+  await page.route("**/api/admin", (r) => r.fulfill({ json: { ok: true } }));
   await page.route("**/api/admin/gold-requests", async (r) => {
     if (r.request().method() === "GET")
       return r.fulfill({ json: { requests: [item] } });
@@ -207,8 +179,10 @@ test("Gold dashboard tab and manual controls with isolated UI fixtures", async (
   await expect(
     page.getByText("Invitation sent at", { exact: true }),
   ).toBeVisible();
-  await page.getByRole("tab", { name: "Academy applications" }).click();
-  await expect(page.getByText("No applications found.")).toBeVisible();
+  await expect(page.getByRole("tab")).toHaveCount(2);
+  await expect(
+    page.getByRole("tab", { name: "Academy applications" }),
+  ).toHaveCount(0);
 });
 
 test("tutorial is available in both languages and provider links match supplied URLs", async ({
@@ -244,11 +218,11 @@ test("tutorial is available in both languages and provider links match supplied 
   }
 });
 
-test("both forms keep separate payloads and confirmations using isolated API fixtures", async ({
+test("Gold access retains pending confirmation using an isolated API fixture", async ({
   page,
 }) => {
   const posts: { url: string; data: Record<string, unknown> }[] = [];
-  for (const route of ["applications", "gold-requests"])
+  for (const route of ["gold-requests"])
     await page.route(`**/api/${route}`, async (r) => {
       posts.push({ url: route, data: r.request().postDataJSON() });
       await r.fulfill({ status: 201, json: { ok: true } });
@@ -265,20 +239,7 @@ test("both forms keep separate payloads and confirmations using isolated API fix
   await expect(page.locator("#gold-request [role=status]")).toContainText(
     "Pending Verification",
   );
-  const academy = page.locator("#apply");
-  await academy.locator("[name=name]").fill("Controlled Academy Test");
-  await academy.locator("[name=email]").fill("academy@example.com");
-  await academy.locator("[name=phone]").fill("+355 69 123 4567");
-  await academy.locator("[name=country]").fill("Albania");
-  await academy
-    .locator("[name=reason]")
-    .fill("I want to learn about financial markets.");
-  await academy.locator("[name=privacy]").check();
-  await academy.getByRole("button", { name: "Send application" }).click();
-  await expect(academy.locator("[role=status]")).toContainText(
-    "Your application has been saved",
-  );
-  expect(posts.map((p) => p.url)).toEqual(["gold-requests", "applications"]);
+  expect(posts.map((p) => p.url)).toEqual(["gold-requests"]);
   expect(posts[0].data).toMatchObject({
     broker_id: "TQ123",
     phone: "+355 69 123 4567",
@@ -286,12 +247,6 @@ test("both forms keep separate payloads and confirmations using isolated API fix
     language: "en",
   });
   expect(posts[0].data).not.toHaveProperty("status");
-  expect(posts[1].data).toMatchObject({
-    marketing: false,
-    privacy: true,
-    language: "en",
-  });
-  expect(posts[1].data).not.toHaveProperty("broker_id");
 });
 
 test("Gold required fields show red stars and WhatsApp is mandatory", async ({
@@ -484,9 +439,7 @@ test("Help dashboard separates requests and supports resolve, email retry and de
       admin_email_sent: false,
     },
   ];
-  await page.route("**/api/admin", (r) =>
-    r.fulfill({ json: { applications: [] } }),
-  );
+  await page.route("**/api/admin", (r) => r.fulfill({ json: { ok: true } }));
   await page.route("**/api/admin/support-requests", async (r) => {
     if (r.request().method() === "GET")
       return r.fulfill({ json: { requests: items } });
@@ -514,6 +467,16 @@ test("Help dashboard separates requests and supports resolve, email retry and de
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Delete", exact: true }).click();
   await expect(page.getByText("No help requests yet.")).toBeVisible();
-  await page.getByRole("tab", { name: "Academy applications" }).click();
-  await expect(page.getByText("No applications found.")).toBeVisible();
+  await expect(page.getByRole("tab")).toHaveCount(2);
+  await expect(
+    page.getByRole("tab", { name: "Academy applications" }),
+  ).toHaveCount(0);
+});
+
+test("retired application endpoint cannot accept submissions", async ({
+  request,
+}) => {
+  expect((await request.post("/api/applications", { data: {} })).status()).toBe(
+    404,
+  );
 });

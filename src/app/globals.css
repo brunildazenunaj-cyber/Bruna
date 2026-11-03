@@ -460,9 +460,7 @@ h1 {
   color: #8a7b63;
   margin-top: 25px;
 }
-.academy-section {
-  background: #efebe3;
-}
+
 .section-heading {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1589,34 +1587,7 @@ footer {
 .launch-page .secure-note {
   font-size: 11px;
 }
-.compact-academy {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8%;
-  background: #efece6;
-  align-items: center;
-  border-bottom: 1px solid var(--line);
-}
-.compact-academy p {
-  font-size: 16px;
-  margin-bottom: 0;
-}
-.compact-academy ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.compact-academy li {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 9px 0;
-  font-size: 15px;
-}
-.compact-academy li svg {
-  color: #80663c;
-  flex-shrink: 0;
-}
+
 .launch-page .text-link {
   font-size: 14px;
   color: #5e4c2e;
@@ -1726,7 +1697,6 @@ footer {
     justify-content: center;
   }
   .tutorial-section,
-  .compact-academy,
   .launch-page .apply-section,
   .launch-page .faq-section {
     grid-template-columns: 1fr;

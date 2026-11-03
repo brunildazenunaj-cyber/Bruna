@@ -1,11 +1,10 @@
 "use client";
 import { useState } from "react";
-import { ArrowUpRight, Menu, X, Check } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { content } from "@/lib/content";
 import { useLanguage, LanguageSwitch } from "@/components/language";
 import { SupportForm } from "@/components/support-form";
 import { supportCopy } from "@/lib/support";
-import { ApplicationForm } from "@/components/application-form";
 import { GoldSection, GoldRequestForm } from "@/components/gold-section";
 import {
   RegistrationTutorial,
@@ -31,7 +30,7 @@ export function LandingPage({ tutorial }: { tutorial: TutorialAssets }) {
           className={menu ? "navigation open" : "navigation"}
           aria-label={t.navigation}
         >
-          {["gold", "tutorial", "academy"].map((id, i) => (
+          {["gold", "tutorial"].map((id, i) => (
             <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>
               {t.nav[i]}
             </a>
@@ -61,10 +60,6 @@ export function LandingPage({ tutorial }: { tutorial: TutorialAssets }) {
               {t.goldCta}
               <ArrowUpRight size={18} />
             </a>
-            <a className="button secondary-button" href="#academy">
-              {t.academyCta}
-              <ArrowUpRight size={18} />
-            </a>
           </div>
         </section>
         <GoldSection lang={lang} />
@@ -74,37 +69,6 @@ export function LandingPage({ tutorial }: { tutorial: TutorialAssets }) {
             <GoldRequestForm lang={lang} />
             <SupportForm lang={lang} />
           </div>
-        </section>
-        <section id="academy" className="section compact-academy">
-          <div>
-            <h2>{t.academyTitle}</h2>
-            <p>{t.academyText}</p>
-          </div>
-          <div>
-            <ul>
-              {t.academyFacts.map((f) => (
-                <li key={f}>
-                  <Check size={16} />
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <a className="text-link" href="#apply">
-              {t.apply}
-              <ArrowUpRight size={17} />
-            </a>
-          </div>
-        </section>
-        <section id="apply" className="section apply-section">
-          <div className="apply-copy">
-            <h2>{t.formTitle}</h2>
-            <p>{t.formText}</p>
-            <a className="text-link" href="mailto:brunildazenunaj@gmail.com">
-              {t.help}
-              <ArrowUpRight size={16} />
-            </a>
-          </div>
-          <ApplicationForm lang={lang} />
         </section>
       </main>
       <footer className="launch-footer">
